@@ -33,26 +33,27 @@ module.exports = function() {
       .enter().append('path')
         .attr('d', path)
         .style('stroke', function(d) {
-          return d.race && d.race.length > 0 ? '#0f0' : 'magenta'
+          return d.race && d.race.length > 0 ? 'black' : 'magenta'
         })
-        .style('fill', function(d) {
-          if(d.race[0] && d.race[0].reportingUnits) {
-            var winner = _.max(d.race[0].reportingUnits[0].candidates, function(candidate) {
-              return candidate.voteCount
-            })
-            console.log(winner);
-            if(winner.party === "Dem") {
-              return 'blue'
-            } else if (winner.party === "GOP") {
-              return 'red'
-            }            
-          }
+        .style('fill', setFill)
+        .on('mouseover', function(d) {
+          console.log(d.race[0])
         });
 
     // svg.append('path')
     //     .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
     //     .attr('class', 'states')
     //     .attr('d', path);
+  }
+
+  function setFill(d) {
+    if(d.race[0] && d.race[0].reportingUnits) {
+      var winner = _.max(d.race[0].reportingUnits[0].candidates, function(candidate) {
+        var party = candidate.party
+        return party !== "Dem" && party !== "GOP" ? candidate.voteCount : undefined
+      })
+    return winner.party === "Lib" ? "#00FFFF" : "#FFFF00" 
+    }
   }
 
   d3.select(self.frameElement).style('height', height + 'px');
