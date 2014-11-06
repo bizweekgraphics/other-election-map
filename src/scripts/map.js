@@ -113,9 +113,8 @@ module.exports = function() {
 
   function tooltipHtml(d) {
     var winner = getWinner(d);
-    var winnerName = [winner.first, winner.last].join(' ');
 
-    return '<span class="winner-name">' + winnerName + '</span>' + '<span style="color:' + partyScale(winner.party) + '">' + winner.party + '</span>'
+    return '<span class="winner-name">' + winner.name + '</span>' + '<span style="color:' + partyScale(winner.party) + '">' + winner.party + '</span>'
   }
 
   function getReportingUnitFromFipsCode(races, fipsCode) {

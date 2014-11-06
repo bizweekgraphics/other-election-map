@@ -6,7 +6,7 @@ var partyArray = require('./../party_abbrev.json').parties;
 
 function addPartyToCandidates(racesArray, candidates) {
   return racesArray.map(function(race) {
-    race.reportingUnits.map(function(reportingUnit) {
+    race.reportingUnits = race.reportingUnits.map(function(reportingUnit) {
       reportingUnit.candidates = reportingUnit.candidates.map(function(candidate) {
         var matchingCandidate = candidatesArray.filter(function(candidateObj) {
           return candidateObj.polID === candidate.polID
@@ -16,17 +16,21 @@ function addPartyToCandidates(racesArray, candidates) {
 
         if(partyAbbrv !== "Dem" && partyAbbrv !== "GOP") {
           candidate.party = getPartyNameFromAbbrv(partyAbbrv);
-          return candidate        
+
+          var candidateName = [candidate.first, candidate.last].join(' ')
+
+          var strippedCandidate = {name: candidateName, polId: candidate.polID, voteCount: candidate.voteCount, party: candidate.party}
+          return strippedCandidate        
         }
       })
 
       reportingUnit.candidates = reportingUnit.candidates.filter(function(candidate) {
         return candidate
       })
-      strippedReportingUnit = {fipsCode: reportingUnit.fipsCode, candidates: reportingUnit.candidates}
+      var strippedReportingUnit = {fipsCode: reportingUnit.fipsCode, candidates: reportingUnit.candidates}
       return strippedReportingUnit
     })
-    strippedRace = {reportingUnits: race.reportingUnits}
+    var strippedRace = {reportingUnits: race.reportingUnits}
     return strippedRace
   })
 }
@@ -39,7 +43,7 @@ function getPartyNameFromAbbrv(abbrv) {
 }
 
 function writeFile(json) {
-  fs.writeFile('../updated_senate_by_county.json', JSON.stringify(json, undefined, 2), function(err) {
+  fs.writeFile('../updated_senate_by_county.json', JSON.stringify(json), function(err) {
     err ? console.log(err) : console.log("JSON SAVED")
   })
 }
