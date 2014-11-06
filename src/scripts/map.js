@@ -8,6 +8,7 @@ module.exports = function() {
   var width = 960,
       height = 600;
 
+  var partyScale = d3.scale.category10();
 
   var projection = d3.geo.albersUsa()
       .scale(1280)
@@ -49,10 +50,9 @@ module.exports = function() {
   function setFill(d) {
     if(d.race[0] && d.race[0].reportingUnits) {
       var winner = _.max(d.race[0].reportingUnits[0].candidates, function(candidate) {
-        var party = candidate.party
-        return party !== "Dem" && party !== "GOP" ? candidate.voteCount : undefined
+        return candidate.voteCount
       })
-    return winner.party === "Lib" ? "#00FFFF" : "#FFFF00" 
+    return partyScale(winner.party);
     }
   }
 

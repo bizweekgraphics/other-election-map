@@ -12,6 +12,7 @@
   "devDependencies": {
     "browserify": "^6.1.0",
     "deamdify": "^0.1.1",
+    "debowerify": "^0.9.1",
     "gulp": "^3.8.8",
     "gulp-browserify": "^0.5.0",
     "gulp-concat": "^2.4.1",

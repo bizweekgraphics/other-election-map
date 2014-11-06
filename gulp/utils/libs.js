@@ -3,7 +3,8 @@ var libs = [
   'jquery',
   'topojson',
   'queue-async',
-  'underscore'
+  'underscore',
+  './bower_components/d3-tip/index'
 ]
 
 exports.libs = libs
