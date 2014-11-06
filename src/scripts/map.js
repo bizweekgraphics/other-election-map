@@ -121,7 +121,7 @@ module.exports = function() {
     return races.filter(function(race) {
       return race.reportingUnits[0].fipsCode === fipsCode
     })
-  } 
+  }
 
   function addRacesToUs(us, races) {
     var features = topojson.feature(us, us.objects.counties).features
@@ -131,6 +131,14 @@ module.exports = function() {
       return feature
     })
 
+  }
+
+  function getParties(races) {
+    return _.uniq(_.flatten(races.map(function(race) {
+      return race.reportingUnits[0].candidates.map(function(candidate) {
+        return candidate.party;
+      });
+    })));
   }
 
   d3.select(self.frameElement).style('height', height + 'px');
