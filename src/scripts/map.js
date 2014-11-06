@@ -51,6 +51,7 @@ module.exports = function() {
       .selectAll('path')
         .data(us)
       .enter().append('path')
+        .attr('class', 'county')
         .attr('d', path)
         .style('stroke', function(d) {
           return d.race && d.race.length > 0 ? 'black' : 'magenta'

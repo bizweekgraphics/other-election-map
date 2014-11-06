@@ -1,3 +1,6 @@
+.county:hover {
+  opacity: 0.5; }
+
 .states {
   fill: none;
   stroke: #FFFF00;
