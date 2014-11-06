@@ -15,7 +15,8 @@
 
 .d3-tip {
   line-height: 1;
-  font-weight: bold;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 10pt;
   padding: 12px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
@@ -28,7 +29,7 @@
   display: inline;
   font-size: 10px;
   width: 100%;
-  line-height: 1;
+  line-height: 0.9;
   color: rgba(0, 0, 0, 0.8);
   content: "\25BC";
   position: absolute;
