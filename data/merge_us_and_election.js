@@ -1,22 +1,25 @@
 var fs = require('fs');
 var _  = require('underscore');
+var d3 = require('d3');
+var queue = require('queue-async');
+var topojson = require('topojson');
 
 var us = require('./us.json');
 var races = require('./updated_senate_by_county.json').races
 
 
 
-function addRacesToUS(us, races) {
-  us.objects.counties.geometries = us.objects.counties.geometries.map(function(county) {
-    var fipsCode = county.id.toString();
-    race = getReportingUnitFromFipsCode(races, fipsCode)
-    if(race) {county.race = race;};
+// function addRacesToUS(us, races) {
+//   us.objects.counties = us.objects.counties.geometries.map(function(county) {
+//     var fipsCode = county.id.toString();
+//     race = getReportingUnitFromFipsCode(races, fipsCode)
+//     if(race) {county.race = race;};
 
-    return county
-  })
+//     return county
+//   })
 
-  return us
-}
+//   return us
+// }
 
 function getReportingUnitFromFipsCode(races, fipsCode) {
   return races.filter(function(race) {
@@ -30,4 +33,17 @@ function writeFile(json) {
   })
 }
 
-writeFile(addRacesToUS(us, races))
+
+function addRacesToUs(us, races) {
+  var features = topojson.feature(us, us.objects.counties).features
+
+  features = features.map(function(feature) {
+    feature.race = getReportingUnitFromFipsCode(races, feature.id.toString())
+    return feature
+  })
+
+  writeFile(features)
+}
+
+
+addRacesToUs(us, races)

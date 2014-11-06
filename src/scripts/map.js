@@ -29,17 +29,18 @@ module.exports = function() {
     svg.append('g')
         .attr('class', 'counties')
       .selectAll('path')
-        .data(topojson.feature(us, us.objects.counties).features)
+        .data(us)
       .enter().append('path')
         .attr('d', path)
         .style('stroke', function(d) {
-          return '#0f0'
+          console.log(d)
+          return d.race && d.race.length > 0 ? '#0f0' : 'magenta'
         });
 
-    svg.append('path')
-        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
-        .attr('class', 'states')
-        .attr('d', path);
+    // svg.append('path')
+    //     .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+    //     .attr('class', 'states')
+    //     .attr('d', path);
   }
 
   d3.select(self.frameElement).style('height', height + 'px');
