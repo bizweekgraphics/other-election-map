@@ -4,7 +4,7 @@ var libs = [
   'topojson',
   'queue-async',
   'underscore',
-  './bower_components/d3-tip/index'
+  './vendor/d3-tip'
 ]
 
 exports.libs = libs

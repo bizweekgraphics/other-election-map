@@ -1,13 +1,22 @@
 var $ = require('jquery');
 var d3 = require('d3');
+d3.tip = require('./vendor/d3-tip')(d3);
 var queue = require('queue-async');
 var topojson = require('topojson');
 var _ = require('underscore');
+
 
 module.exports = function() {
   var width = 960,
       height = 650,
       centered;
+
+  var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .html(function(d) {
+      var winner = getWinner(d);
+      return winner.party
+    });
 
   var partyScale = d3.scale.category10();
 
@@ -20,8 +29,8 @@ module.exports = function() {
 
   var svg = d3.select('body').append('svg')
       .attr('width', width)
-      .attr('height', height);
-
+      .attr('height', height)
+      .call(tip)
 
   svg.append("rect")
       .attr("class", "background")
@@ -47,9 +56,11 @@ module.exports = function() {
           return d.race && d.race.length > 0 ? 'black' : 'magenta'
         })
         .style('fill', setFill)
-        .on('mouseover', function(d) {
-          console.log(d.race[0])
-        })
+        // .on('mouseover', function(d) {
+        //   console.log(d.race[0])
+        // })
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide)
         .on('click', clicked)
 
     // svg.append('path')
@@ -60,10 +71,16 @@ module.exports = function() {
 
   function setFill(d) {
     if(d.race[0] && d.race[0].reportingUnits) {
-      var winner = _.max(d.race[0].reportingUnits[0].candidates, function(candidate) {
+      var winner = getWinner(d);
+      return partyScale(winner.party);
+    }
+  }
+
+  function getWinner(d) {
+    if(d.race[0] && d.race[0].reportingUnits) {
+      return  _.max(d.race[0].reportingUnits[0].candidates, function(candidate) {
         return candidate.voteCount
       })
-    return partyScale(winner.party);
     }
   }
 

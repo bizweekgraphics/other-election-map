@@ -1,0 +1,57 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'https://github.com/Caged/d3-tip',
+1 verbose cli   '--save' ]
+2 info using npm@1.4.23
+3 info using node@v0.10.31
+4 verbose node symlink /usr/local/bin/node
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'https://github.com/Caged/d3-tip', null ]
+7 verbose cache add name=undefined spec="https://github.com/Caged/d3-tip" args=["https://github.com/Caged/d3-tip",null]
+8 verbose parsed url { protocol: 'https:',
+8 verbose parsed url   slashes: true,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: 'github.com',
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: 'github.com',
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: '/Caged/d3-tip',
+8 verbose parsed url   path: '/Caged/d3-tip',
+8 verbose parsed url   href: 'https://github.com/Caged/d3-tip' }
+9 silly lockFile 6ebbb8db-https-github-com-Caged-d3-tip https://github.com/Caged/d3-tip
+10 verbose lock https://github.com/Caged/d3-tip /Users/traveler/.npm/6ebbb8db-https-github-com-Caged-d3-tip.lock
+11 verbose addRemoteTarball [ 'https://github.com/Caged/d3-tip', null ]
+12 info retry fetch attempt 1 at 12:42:20
+13 verbose fetch to= /var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip
+14 http GET https://github.com/Caged/d3-tip
+15 http 200 https://github.com/Caged/d3-tip
+16 verbose tar unpack /var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip
+17 silly lockFile 68bc8616-t-github-com-Caged-d3-tip-unpack tar:///var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip-unpack
+18 verbose lock tar:///var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip-unpack /Users/traveler/.npm/68bc8616-t-github-com-Caged-d3-tip-unpack.lock
+19 silly lockFile 4360a1d8--3DNAIdt-github-com-Caged-d3-tip tar:///var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip
+20 verbose lock tar:///var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip /Users/traveler/.npm/4360a1d8--3DNAIdt-github-com-Caged-d3-tip.lock
+21 silly gunzTarPerm modes [ '755', '644' ]
+22 error not a package /var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip
+23 silly lockFile 68bc8616-t-github-com-Caged-d3-tip-unpack tar:///var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip-unpack
+24 silly lockFile 68bc8616-t-github-com-Caged-d3-tip-unpack tar:///var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip-unpack
+25 silly lockFile 4360a1d8--3DNAIdt-github-com-Caged-d3-tip tar:///var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip
+26 silly lockFile 4360a1d8--3DNAIdt-github-com-Caged-d3-tip tar:///var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip
+27 silly lockFile 6ebbb8db-https-github-com-Caged-d3-tip https://github.com/Caged/d3-tip
+28 silly lockFile 6ebbb8db-https-github-com-Caged-d3-tip https://github.com/Caged/d3-tip
+29 error Error: ENOENT, open '/var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip-unpack/package.json'
+30 error If you need help, you may report this *entire* log,
+30 error including the npm and node versions, at:
+30 error     <http://github.com/npm/npm/issues>
+31 error System Darwin 13.2.0
+32 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "https://github.com/Caged/d3-tip" "--save"
+33 error cwd /Users/traveler/Projects/other-election-map
+34 error node -v v0.10.31
+35 error npm -v 1.4.23
+36 error path /var/folders/q3/409hgx6j7ynf3z82l5f0qj5m0000h1/T/npm-89543-_3DNAIdt/github.com/Caged/d3-tip-unpack/package.json
+37 error code ENOENT
+38 error errno 34
+39 verbose exit [ 34, true ]
