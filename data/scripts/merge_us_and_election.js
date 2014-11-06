@@ -27,7 +27,7 @@ function getReportingUnitFromFipsCode(races, fipsCode) {
 } 
 
 function writeFile(json) {
-  fs.writeFile('us_and_races.json', JSON.stringify(json), function(err) {
+  fs.writeFile('../us_and_races.json', JSON.stringify(json), function(err) {
     err ? console.log(err) : console.log("JSON SAVED")
   })
 }
