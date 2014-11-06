@@ -13,12 +13,9 @@ module.exports = function() {
 
   var tip = d3.tip()
     .attr('class', 'd3-tip')
-    .html(function(d) {
-      var winner = getWinner(d);
-      return winner.party
-    });
+    .html(tooltipHtml);
 
-  var partyScale = d3.scale.category10();
+  var partyScale = d3.scale.category20();
 
   var projection = d3.geo.albersUsa()
       .scale(1280)
@@ -54,7 +51,7 @@ module.exports = function() {
         .attr('class', 'county')
         .attr('d', path)
         .style('stroke', function(d) {
-          return d.race && d.race.length > 0 ? 'black' : 'magenta'
+          return d.race && d.race.length > 0 ? '#FEF' : '#FEF'
         })
         .style('fill', setFill)
         // .on('mouseover', function(d) {
@@ -74,6 +71,8 @@ module.exports = function() {
     if(d.race[0] && d.race[0].reportingUnits) {
       var winner = getWinner(d);
       return partyScale(winner.party);
+    } else {
+      return 'white'
     }
   }
 
@@ -108,6 +107,13 @@ module.exports = function() {
         .duration(750)
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
         .style("stroke-width", 1.5 / k + "px");
+  }
+
+  function tooltipHtml(d) {
+    var winner = getWinner(d);
+    var winnerName = [winner.first, winner.last].join(' ');
+
+    return '<span class="winner-name">' + winnerName + '</span>' + '<span style="color:' + partyScale(winner.party) + '">' + winner.party + '</span>'
   }
 
 

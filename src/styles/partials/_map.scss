@@ -2,6 +2,10 @@
 //   fill: none;
 // }
 
+.county {
+  stroke-width: .5px;
+}
+
 .county:hover {
   opacity: .5;
 }
@@ -47,4 +51,8 @@
   top: 100%;
   left: 0;
   pointer-events: none;
+}
+
+.winner-name {
+  padding: 5px;
 }
