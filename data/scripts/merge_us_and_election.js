@@ -44,5 +44,4 @@ function addRacesToUs(us, races) {
   writeFile(features)
 }
 
-
 addRacesToUs(us, races)
