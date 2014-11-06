@@ -22,7 +22,7 @@ module.exports = function() {
       .attr('height', height);
 
   queue()
-      .defer(d3.json, '/data/us_and_races.json')
+      .defer(d3.json, 'data/us_and_races.json')
       .await(ready);
 
   function ready(error, us) {
