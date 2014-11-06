@@ -33,8 +33,20 @@ module.exports = function() {
       .enter().append('path')
         .attr('d', path)
         .style('stroke', function(d) {
-          console.log(d)
           return d.race && d.race.length > 0 ? '#0f0' : 'magenta'
+        })
+        .style('fill', function(d) {
+          if(d.race[0] && d.race[0].reportingUnits) {
+            var winner = _.max(d.race[0].reportingUnits[0].candidates, function(candidate) {
+              return candidate.voteCount
+            })
+            console.log(winner);
+            if(winner.party === "Dem") {
+              return 'blue'
+            } else if (winner.party === "GOP") {
+              return 'red'
+            }            
+          }
         });
 
     // svg.append('path')
