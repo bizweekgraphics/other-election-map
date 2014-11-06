@@ -1,6 +1,9 @@
 var libs = [
   'd3',
-  'jquery'
+  'jquery',
+  'topojson',
+  'queue-async',
+  'underscore'
 ]
 
 exports.libs = libs

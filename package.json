@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "d3": "^3.4.13",
-    "jquery": "^2.1.1"
+    "jquery": "^2.1.1",
+    "queue-async": "^1.0.7",
+    "topojson": "^1.6.18",
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "browserify": "^6.1.0",

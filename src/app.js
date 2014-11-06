@@ -1,1 +1,1 @@
-console.log('running');
+require('./scripts/map.js')()
