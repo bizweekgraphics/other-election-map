@@ -6,7 +6,7 @@ var _ = require('underscore');
 
 module.exports = function() {
   var width = 960,
-      height = 600,
+      height = 650,
       centered;
 
   var partyScale = d3.scale.category10();
@@ -48,7 +48,7 @@ module.exports = function() {
         })
         .style('fill', setFill)
         .on('mouseover', function(d) {
-          // console.log(d.race[0])
+          console.log(d.race[0])
         })
         .on('click', clicked)
 
