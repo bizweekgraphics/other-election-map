@@ -15,6 +15,8 @@ module.exports = function() {
 
   var colors = ['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600']
 
+  // var colors = ['purple', 'magenta', 'navy', 'maroon', 'teal', 'aqua', 'green', 'lime', 'olive', 'yellow']
+
   var partyScale = d3.scale.ordinal()
     .range(d3.shuffle(colors))
 
@@ -41,7 +43,6 @@ module.exports = function() {
   queue()
     .defer(d3.json, 'data/us.json')
     .defer(d3.json, 'data/updated_senate_by_county.json')
-    // .defer(d3.json, 'data/us_and_races.json')
     .await(ready);
 
   function ready(error, us, racesArray) {
@@ -53,17 +54,9 @@ module.exports = function() {
         .data(addRacesToUs(us, races))
       .enter().append('path')
         .attr('class', 'county')
-        .attr('d', function(d) {
-          if(d.id < 2013 || d.id > 2291) {
-            return path(d)
-          }
-        })
+        .attr('d', path)
         .style('fill', setFill)
-        .on('mouseover', function(d) {
-          if(d.race[0].reportingUnits[0].candidates.length > 0) {
-            tip.show(d)          
-          }
-        })
+        .on('mouseover', tip.show)
         .on('mouseout', tip.hide)
         .on('click', clicked);
 
@@ -74,8 +67,14 @@ module.exports = function() {
       .enter().append('path')
         .attr('d', path)
         .attr('class', function(d) {
+          if(d.id === 35) {
+            return "state new-mexico"
+          }
           return d.id === 2 ? "state alaska" : "state"
-        });
+        })
+        .on('mouseover', function(d) {
+          console.log(d)
+        })
 
     //Deals with Alaska
     d3.select('.alaska')
@@ -139,6 +138,10 @@ module.exports = function() {
   function tooltipHtml(d) {
     var winner = getWinner(d);
 
+    if(winner.name === undefined) {
+      return '<span class="winner-name">Vacant Seat</span>'
+    }
+
     return '<span class="winner-name">' + winner.name + '</span>' + '<span style="color:' + partyScale(winner.party) + '">' + winner.party + '</span>'
   }
 
@@ -164,7 +167,7 @@ module.exports = function() {
     return features.map(function(feature) {
       if(feature.id === 2) {
         feature.race = getReportingUnitFromFipsCode(races, "2000")
-      }
+      } 
       return feature
     })
   }
