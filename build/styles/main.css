@@ -1,3 +1,7 @@
+body {
+  font-family: helvetica, arial, sans-serif;
+  font-size: 10pt; }
+
 .county {
   stroke-width: 0.5px; }
 
@@ -15,8 +19,6 @@
 
 .d3-tip {
   line-height: 1;
-  font-family: helvetica, arial, sans-serif;
-  font-size: 10pt;
   padding: 12px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;

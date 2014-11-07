@@ -15,6 +15,8 @@ module.exports = function() {
 
   var partyScale = d3.scale.category20();
 
+  var voteTotalScale = d3.scale.linear().range([0,50]);
+
   var projection = d3.geo.albersUsa()
       .scale(1280)
       .translate([width / 2, height / 2]);
@@ -67,6 +69,50 @@ module.exports = function() {
     //     .datum(topojson.mesh(states, states.objects.states, function(a, b) { return a !== b; }))
     //     .attr('class', 'states')
     //     .attr('d', path);
+
+    // LEGEND
+
+    // var parties = getParties(races);
+    var partyVotes = getPartyVotes(races);
+    partyVotes = _.sortBy(partyVotes, function(d) { return -d.votes; }).slice(0,8);
+    voteTotalScale.domain([0, d3.max(partyVotes, function(d) { return d.votes; })])
+    var legendMarginRight = 100;
+    var legendLineHeight = 20;
+
+    svg.append("text")
+      .attr("x", width - legendMarginRight)
+      .attr("y", height - (partyVotes.length+1)*legendLineHeight)
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .style("font-weight", "bold")
+      .text("National vote total")
+
+    var legend = svg.selectAll(".legend")
+        .data(partyVotes)
+      .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d, i) { return "translate(0," + (i * legendLineHeight + (height - partyVotes.length*legendLineHeight)) + ")"; });
+
+    legend.append("rect")
+        .attr("x", width - legendMarginRight)
+        .attr("width", function(d) { return voteTotalScale(d.votes); })
+        .attr("height", legendLineHeight - 2)
+        .style("fill", function(d) { return partyScale(d.name); });
+
+    legend.append("text")
+        .attr("x", width - legendMarginRight - 4)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d.name; });
+
+    legend.append("text")
+        .attr("x", function(d) { return width - legendMarginRight + 4 + voteTotalScale(d.votes); })
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("fill", "#ccc")
+        .text(function(d) { return bbwNumberFormat(d.votes); });
+
   }
 
   function setFill(d) {
@@ -139,6 +185,54 @@ module.exports = function() {
         return candidate.party;
       });
     })));
+  }
+
+  function getPartyVotes(races) {
+
+    partyVotes = getParties(races).map(function(party, index) {
+      return {
+        "name": party,
+        "votes": 0
+      };
+    });
+
+    races.forEach(function(race, index) {
+      race.reportingUnits[0].candidates.forEach(function(candidate, index) {
+        _.findWhere(partyVotes, {"name": candidate.party}).votes += candidate.voteCount;
+      })
+    });
+
+    return partyVotes;
+
+  }
+
+  // adapted from d3.formatPrefix
+  function bbwNumberFormat(dolla) {
+    var base = Math.max(1, Math.min(1e12, dolla));
+    var scaler = bbwFormatPrefix(base);
+    return parseFloat(scaler.scale(dolla).toPrecision(3))+scaler.symbol;
+  }
+  var bbw_formatPrefixes = [ "p", "n", "µ", "m", "", "k", "m", "b", "t" ].map(bbw_formatPrefix);
+  function bbwFormatPrefix(value, precision) {
+  	var i = 0;
+  	if (value) {
+  		if (value < 0) value *= -1;
+  		if (precision) value = d3.round(value, d3_format_precision(value, precision));
+  		i = 1 + Math.floor(1e-12 + Math.log(value) / Math.LN10);
+  		i = Math.max(-24, Math.min(24, Math.floor((i <= 0 ? i + 1 : i - 1) / 3) * 3));
+  	}
+  	return bbw_formatPrefixes[4 + i / 3];
+  };
+  function bbw_formatPrefix(d, i) {
+  	var k = Math.pow(10, Math.abs(4 - i) * 3);
+  	return {
+  		scale: i > 4 ? function(d) {
+  			return d / k;
+  		} : function(d) {
+  			return d * k;
+  		},
+  		symbol: d
+  	};
   }
 
   d3.select(self.frameElement).style('height', height + 'px');
