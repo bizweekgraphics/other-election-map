@@ -13,7 +13,10 @@ module.exports = function() {
     .attr('class', 'd3-tip')
     .html(tooltipHtml);
 
-  var partyScale = d3.scale.category20();
+  var colors = ['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600']
+
+  var partyScale = d3.scale.ordinal()
+    .range(d3.shuffle(colors))
 
   var projection = d3.geo.albersUsa()
       .scale(1280)
@@ -74,6 +77,7 @@ module.exports = function() {
           return d.id === 2 ? "state alaska" : "state"
         });
 
+    //Deals with Alaska
     d3.select('.alaska')
       .style('fill', function(d) {
         return partyScale(d);
@@ -139,7 +143,6 @@ module.exports = function() {
   }
 
   function getReportingUnitFromFipsCode(races, fipsCode) {
-    // fipsCode = dealWithAlaska(fipsCode);
     return races.filter(function(race) {
       return race.reportingUnits[0].fipsCode === fipsCode
     })
