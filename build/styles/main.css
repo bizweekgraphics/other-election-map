@@ -1,6 +1,11 @@
 body {
   font-family: helvetica, arial, sans-serif;
-  font-size: 10pt; }
+  font-size: 10pt;
+  max-width: 960px;
+  margin: 40px auto; }
+
+p {
+  max-width: 640px; }
 
 .county {
   stroke-width: 0.5px;
