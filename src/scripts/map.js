@@ -92,7 +92,6 @@ module.exports = function() {
       .style('fill', function(d) {
         return partyScale(d);
       })
-      .style('fill', setFill)
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
       .on('click', clicked);
@@ -113,7 +112,7 @@ module.exports = function() {
     partyVotes = _.sortBy(partyVotes, function(d) { return -d.votes; }).slice(0,8);
     voteTotalScale.domain([0, d3.max(partyVotes, function(d) { return d.votes; })])
     var legendMarginRight = 100;
-    var legendLineHeight = 20;
+    var legendLineHeight = width * .02;
 
     svg.append("text")
       .attr("x", width - legendMarginRight)
@@ -257,7 +256,9 @@ module.exports = function() {
 
     return features.map(function(feature) {
       if(feature.id === 2) {
-        feature.race = getReportingUnitFromFipsCode(races, "2000")
+        var reportingUnit = getReportingUnitFromFipsCode(races, "2000")
+        feature.race = reportingUnit.race
+        races = reportingUnit.races
       }
       return feature
     })

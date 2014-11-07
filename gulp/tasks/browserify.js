@@ -25,7 +25,7 @@
      return bundle
        .bundle()
        .pipe(source('app.js'))
-       .pipe((gStreamify(uglify())))
+       // .pipe((gStreamify(uglify())))
        .pipe(gulp.dest('./build/scripts'))
        .pipe(connect.reload());
    })
