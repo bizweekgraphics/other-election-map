@@ -1,0 +1,20 @@
+{
+  "parties": [
+    {
+      "name": "Libertarian",
+      "description": "A party of “minimum government, maximum freedom”, promoting individuals’ rights so long as they does not interfere with others’ equal rights"
+    },
+    {
+      "name": "Independent",
+      "description": "Independent candidates are not affiliated with any political party"
+    },
+    {
+      "name": "Working Families",
+      "description": "“Working Families is a growing progressive political organization that fights for an economy that works for all of us, and a democracy in which every voice matters.”"
+    },
+    {
+      "name": "Green",
+      "description": "“Committed to environmentalism, non-violence, social justice and grassroots organizing, Greens are renewing democracy without the support of corporate donors.”"
+    }
+  ]
+}
