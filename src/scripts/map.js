@@ -193,18 +193,18 @@ module.exports = function() {
   }
 
   function getReportingUnitFromFipsCode(races, fipsCode) {
-    return _.findWhere(races, {fipsCode: fipsCode})
-    // return races.filter(function(race) {
-    //   return race.fipsCode === fipsCode
-    // })
-    // var returnRace = []
-    // for(var i = 0; i < races.length; i++) {
-    //   if(races[i].reportingUnits[0].fipsCode === fipsCode) {
-    //     returnRace.push(races)
-    //   }
-    // }
-    // console.log(returnRace)
-    // return returnRace
+    var reportingUnit;
+
+    for(var i = 0; typeof(reportingUnit) === "undefined" && i < races.length; i++) {
+      var race = races[i]
+      if(race.fipsCode === fipsCode) {
+        races.splice(i, 1)
+        reportingUnit = race;
+      }
+    }
+
+    return {race: reportingUnit, races: races}
+
 
   }
 
@@ -212,7 +212,10 @@ module.exports = function() {
     var features = topojson.feature(us, us.objects.counties).features
 
     return features.map(function(feature) {
-      feature.race = getReportingUnitFromFipsCode(races, feature.id.toString())
+      var reportingUnit = getReportingUnitFromFipsCode(races, feature.id.toString())
+      feature.race = reportingUnit.race
+      races = reportingUnit.races
+
       return feature
     })
 
