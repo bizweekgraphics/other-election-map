@@ -1,13 +1,23 @@
+.alaska {
+  fill: blue; }
+
 .county {
-  stroke-width: 0.5px; }
+  stroke-width: 0.5px;
+  stroke: #FEF; }
 
 .county:hover {
   opacity: 0.5; }
 
-.states {
+#states {
+  fill: none; }
+
+.state {
+  stroke: #FEF; }
+
+.state-borders {
   fill: none;
-  stroke: none;
-  stroke-linejoin: round; }
+  stroke-linejoin: round;
+  stroke: #FEF; }
 
 .background {
   fill: none;

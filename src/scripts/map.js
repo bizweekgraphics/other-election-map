@@ -36,10 +36,10 @@ module.exports = function() {
   var g = svg.append("g");
 
   queue()
-      .defer(d3.json, 'data/us.json')
-      .defer(d3.json, 'data/updated_senate_by_county.json')
-      // .defer(d3.json, 'data/us_and_races.json')
-      .await(ready);
+    .defer(d3.json, 'data/us.json')
+    .defer(d3.json, 'data/updated_senate_by_county.json')
+    // .defer(d3.json, 'data/us_and_races.json')
+    .await(ready);
 
   function ready(error, us, racesArray) {
     races = racesArray.races
@@ -50,23 +50,44 @@ module.exports = function() {
         .data(addRacesToUs(us, races))
       .enter().append('path')
         .attr('class', 'county')
-        .attr('d', path)
-        .style('stroke', function(d) {
-          return d.race && d.race.length > 0 ? '#FEF' : '#FEF'
+        .attr('d', function(d) {
+          if(d.id < 2013 || d.id > 2291) {
+            return path(d)
+          }
         })
-        // .style('fill', 'url(#crosshatch)')
         .style('fill', setFill)
-        // .on('mouseover', function(d) {
-        //   console.log(d)
-        // })
-        .on('mouseover', tip.show)
+        .on('mouseover', function(d) {
+          if(d.race[0].reportingUnits[0].candidates.length > 0) {
+            tip.show(d)          
+          }
+        })
         .on('mouseout', tip.hide)
         .on('click', clicked);
 
-    // svg.append('path')
-    //     .datum(topojson.mesh(states, states.objects.states, function(a, b) { return a !== b; }))
-    //     .attr('class', 'states')
-    //     .attr('d', path);
+    g.append('g')
+      .attr('id', 'states')
+      .selectAll('path')
+        .data(setStateData(us, races))
+      .enter().append('path')
+        .attr('d', path)
+        .attr('class', function(d) {
+          return d.id === 2 ? "state alaska" : "state"
+        });
+
+    d3.select('.alaska')
+      .style('fill', function(d) {
+        return partyScale(d);
+      })
+      .style('fill', setFill)
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+      .on('click', clicked);
+
+    g.append('path')
+        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+        .attr('class', 'state-borders')
+        .attr('d', path)
+
   }
 
   function setFill(d) {
@@ -118,6 +139,7 @@ module.exports = function() {
   }
 
   function getReportingUnitFromFipsCode(races, fipsCode) {
+    // fipsCode = dealWithAlaska(fipsCode);
     return races.filter(function(race) {
       return race.reportingUnits[0].fipsCode === fipsCode
     })
@@ -131,6 +153,17 @@ module.exports = function() {
       return feature
     })
 
+  }
+
+  function setStateData(us, races) {
+    var features = topojson.feature(us, us.objects.states).features
+
+    return features.map(function(feature) {
+      if(feature.id === 2) {
+        feature.race = getReportingUnitFromFipsCode(races, "2000")
+      }
+      return feature
+    })
   }
 
   d3.select(self.frameElement).style('height', height + 'px');
