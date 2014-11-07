@@ -69,6 +69,7 @@ module.exports = function() {
         .attr('class', 'county')
         .attr('d', path)
         .style('fill', setFill)
+        .on('dragstart', tip.show)
         .on('mouseover', function(d) {
           if(d.race) {
             tip.show(d)
