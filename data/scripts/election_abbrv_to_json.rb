@@ -1,8 +1,12 @@
 require 'json'
+require 'pry'
+
+
 
 def election_abbrv_to_json  
   parties = []
   File.readlines('./../party_abbrev.txt').each do |line|
+    binding.pry
     line.strip!
     word_array = line.split(' ')
     abbreviation = word_array.first

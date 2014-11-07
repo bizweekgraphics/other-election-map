@@ -2,7 +2,6 @@
 //   fill: none;
 // }
 
-
 body {
   font-family: helvetica, arial, sans-serif;
   font-size: 10pt;
@@ -13,6 +12,20 @@ body {
 p {
   max-width: 640px;
 }
+
+#legend-container {
+  pointer-events: none;
+  height: 500px;
+}
+
+@media screen and (min-width: 960px) {
+  #legend-container {
+    position: relative;
+    bottom: 200px;
+  }
+}
+
+
 .county {
   stroke-width: .5px;
   stroke: #FEF
