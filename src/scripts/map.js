@@ -74,10 +74,7 @@ module.exports = function() {
         .attr('d', path)
         .attr('class', function(d) {
           return d.id === 2 ? "state alaska" : "state"
-        })
-        .on('mouseover', function(d) {
-          console.log(d)
-        })
+        });
 
     //Deals with Alaska
     d3.select('.alaska')
