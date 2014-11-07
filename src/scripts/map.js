@@ -108,41 +108,58 @@ module.exports = function() {
     // LEGEND
 
     // var parties = getParties(races);
-    var partyVotes = getPartyVotes(races);
+    var stateRaces = races.filter(function(race) {
+      return race.fipsCode === undefined
+    })
+
+    var partyVotes = getPartyVotes(stateRaces);
     partyVotes = _.sortBy(partyVotes, function(d) { return -d.votes; }).slice(0,8);
     voteTotalScale.domain([0, d3.max(partyVotes, function(d) { return d.votes; })])
-    var legendMarginRight = 100;
-    var legendLineHeight = width * .02;
+    var legendLineHeight = 20;
 
-    svg.append("text")
-      .attr("x", width - legendMarginRight)
-      .attr("y", height - (partyVotes.length+1)*legendLineHeight)
-      .attr("dy", ".35em")
+    if(width < 960) {
+      var legendWidth = width/2
+      var legendMarginRight = 0;
+    } else {
+      var legendMarginRight = 100;
+      var legendWidth = width
+    }
+    var legendHeight = 200;
+
+    var legendContainer = d3.select('#legend-container').append('svg')
+      .attr('height', legendHeight)
+      .attr('width', width)
+
+    legendContainer
+      .append("text")
+      .attr("x", legendWidth - legendMarginRight)
+      .attr("y", (partyVotes.length+1)*legendLineHeight - 175)
+      .attr("dy", ".95em")
       .style("text-anchor", "middle")
       .style("font-weight", "bold")
       .text("National vote total")
 
-    var legend = svg.selectAll(".legend")
+    var legend = legendContainer.selectAll(".legend")
         .data(partyVotes)
       .enter().append("g")
         .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate(0," + (i * legendLineHeight + (height - partyVotes.length*legendLineHeight)) + ")"; });
+        .attr("transform", function(d, i) { return "translate(0," + (i * legendLineHeight + (partyVotes.length*legendLineHeight - 125)) + ")"; });
 
     legend.append("rect")
-        .attr("x", width - legendMarginRight)
+        .attr("x", legendWidth - legendMarginRight)
         .attr("width", function(d) { return voteTotalScale(d.votes); })
         .attr("height", legendLineHeight - 2)
         .style("fill", function(d) { return partyScale(d.name); });
 
     legend.append("text")
-        .attr("x", width - legendMarginRight - 4)
+        .attr("x", legendWidth - legendMarginRight - 4)
         .attr("y", 9)
         .attr("dy", ".35em")
         .style("text-anchor", "end")
         .text(function(d) { return d.name; });
 
     legend.append("text")
-        .attr("x", function(d) { return width - legendMarginRight + 4 + voteTotalScale(d.votes); })
+        .attr("x", function(d) { return legendWidth - legendMarginRight + 4 + voteTotalScale(d.votes); })
         .attr("y", 9)
         .attr("dy", ".35em")
         .style("fill", "#ccc")
@@ -228,7 +245,7 @@ module.exports = function() {
     for(var i = 0; typeof(reportingUnit) === "undefined" && i < races.length; i++) {
       var race = races[i]
       if(race.fipsCode === fipsCode) {
-        races.splice(i, 1)
+        // races.splice(i, 1)
         reportingUnit = race;
       }
     }
@@ -281,11 +298,19 @@ module.exports = function() {
       };
     });
 
+
+
     races.forEach(function(race, index) {
       race.candidates.forEach(function(candidate, index) {
+        if(candidate.voteCount === 66) {
+          console.log(race, candidate)
+        }
         _.findWhere(partyVotes, {"name": candidate.party}).votes += candidate.voteCount;
       })
+
     });
+
+    console.log(partyVotes);
 
     return partyVotes;
 
