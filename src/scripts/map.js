@@ -30,7 +30,7 @@ module.exports = function() {
   var path = d3.geo.path()
       .projection(projection);
 
-  var svg = d3.select('body').append('svg')
+  var svg = d3.select('#map-container').append('svg')
       .attr('width', width)
       .attr('height', height)
       .call(tip)
@@ -61,7 +61,7 @@ module.exports = function() {
         .style('fill', setFill)
         .on('mouseover', function(d) {
           if(d.race) {
-            tip.show(d)          
+            tip.show(d)
           }
         })
         .on('mouseout', tip.hide)
@@ -224,7 +224,7 @@ module.exports = function() {
     return features.map(function(feature) {
       if(feature.id === 2) {
         feature.race = getReportingUnitFromFipsCode(races, "2000")
-      } 
+      }
       return feature
     })
   }
