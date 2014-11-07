@@ -6,9 +6,15 @@ var _ = require('underscore');
 
 module.exports = function() {
   console.time('toph')
-  var width = 960,
-      height = 650,
-      centered;
+  // var width = 960,
+  //     height = 650,
+  //     centered;
+
+  var width = parseInt(d3.select('#map-container').style('width'))
+  , mapRatio = .6
+  , height = width * mapRatio
+  , scaleWidth = width * 1.2
+  , centered;
 
   var tip = d3.tip()
     .attr('class', 'd3-tip')
@@ -24,7 +30,7 @@ module.exports = function() {
   var voteTotalScale = d3.scale.linear().range([0,50]);
 
   var projection = d3.geo.albersUsa()
-      .scale(1280)
+      .scale(scaleWidth)
       .translate([width / 2, height / 2]);
 
   var path = d3.geo.path()
@@ -47,6 +53,10 @@ module.exports = function() {
     .defer(d3.json, 'data/us.json')
     .defer(d3.json, 'data/updated_senate_by_county.json')
     .await(ready);
+
+  // d3.select(window).on('resize', resize);
+
+
 
   function ready(error, us, racesArray) {
     races = racesArray.races
@@ -180,6 +190,27 @@ module.exports = function() {
         .duration(750)
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
         .style("stroke-width", 1.5 / k + "px");
+  }
+
+  function resize() {
+      // adjust things when the window size changes
+      width = parseInt(d3.select('#map-container').style('width'));
+      height = width * mapRatio;
+
+      // update projection
+      projection
+          .translate([width / 2, height / 2])
+          .scale(scaleWidth);
+
+      // resize the map container
+      svg
+          .style('width', width + 'px')
+          .style('height', height + 'px');
+
+      // resize the map
+      svg.select('.state-borders').attr('d', path);
+      svg.selectAll('.county').attr('d', path);
+      svg.selectAll('.state').attr('d', path);
   }
 
   function tooltipHtml(d) {
