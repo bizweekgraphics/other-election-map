@@ -58,7 +58,11 @@ module.exports = function() {
         .attr('class', 'county')
         .attr('d', path)
         .style('fill', setFill)
-        .on('mouseover', tip.show)
+        .on('mouseover', function(d) {
+          if(d.race) {
+            tip.show(d)          
+          }
+        })
         .on('mouseout', tip.hide)
         .on('click', clicked);
 
@@ -69,9 +73,6 @@ module.exports = function() {
       .enter().append('path')
         .attr('d', path)
         .attr('class', function(d) {
-          if(d.id === 35) {
-            return "state new-mexico"
-          }
           return d.id === 2 ? "state alaska" : "state"
         })
         .on('mouseover', function(d) {
@@ -142,7 +143,7 @@ module.exports = function() {
   }
 
   function setFill(d) {
-    if(d.race[0] && d.race[0].reportingUnits) {
+    if(d.race && d.race.candidates) {
       var winner = getWinner(d);
       return winner.party ? partyScale(winner.party) : 'url(#crosshatch)';
     } else {
@@ -151,11 +152,9 @@ module.exports = function() {
   }
 
   function getWinner(d) {
-    if(d.race[0] && d.race[0].reportingUnits) {
-      return  _.max(d.race[0].reportingUnits[0].candidates, function(candidate) {
-        return candidate.voteCount
-      })
-    }
+    return  _.max(d.race.candidates, function(candidate) {
+      return candidate.voteCount
+    })
   }
 
   function clicked(d) {
@@ -194,9 +193,19 @@ module.exports = function() {
   }
 
   function getReportingUnitFromFipsCode(races, fipsCode) {
-    return races.filter(function(race) {
-      return race.reportingUnits[0].fipsCode === fipsCode
-    })
+    return _.findWhere(races, {fipsCode: fipsCode})
+    // return races.filter(function(race) {
+    //   return race.fipsCode === fipsCode
+    // })
+    // var returnRace = []
+    // for(var i = 0; i < races.length; i++) {
+    //   if(races[i].reportingUnits[0].fipsCode === fipsCode) {
+    //     returnRace.push(races)
+    //   }
+    // }
+    // console.log(returnRace)
+    // return returnRace
+
   }
 
   function addRacesToUs(us, races) {
@@ -222,7 +231,7 @@ module.exports = function() {
 
   function getParties(races) {
     return _.uniq(_.flatten(races.map(function(race) {
-      return race.reportingUnits[0].candidates.map(function(candidate) {
+      return race.candidates.map(function(candidate) {
         return candidate.party;
       });
     })));
@@ -238,7 +247,7 @@ module.exports = function() {
     });
 
     races.forEach(function(race, index) {
-      race.reportingUnits[0].candidates.forEach(function(candidate, index) {
+      race.candidates.forEach(function(candidate, index) {
         _.findWhere(partyVotes, {"name": candidate.party}).votes += candidate.voteCount;
       })
     });
