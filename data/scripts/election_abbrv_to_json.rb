@@ -8,6 +8,7 @@ def election_abbrv_to_json
     abbreviation = word_array.first
     word_array.shift
     party_name = titleize(word_array.join(' '))
+    party_name = "U.S. Taxpaers" if party_name == "U.s. Taxpayers" 
     parties << {name: party_name, abbreviation: abbreviation}
   end
   write_file('party_abbrev.json', {parties: parties})

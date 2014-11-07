@@ -5,6 +5,7 @@ var topojson = require('topojson');
 var _ = require('underscore');
 
 module.exports = function() {
+  console.time('toph')
   var width = 960,
       height = 650,
       centered;
@@ -137,6 +138,8 @@ module.exports = function() {
         .attr("dy", ".35em")
         .style("fill", "#ccc")
         .text(function(d) { return bbwNumberFormat(d.votes); });
+
+    console.timeEnd('toph')
   }
 
   function setFill(d) {
