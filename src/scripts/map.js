@@ -5,6 +5,7 @@ var topojson = require('topojson');
 var _ = require('underscore');
 
 module.exports = function() {
+  console.time('toph')
   var width = 960,
       height = 650,
       centered;
@@ -13,7 +14,12 @@ module.exports = function() {
     .attr('class', 'd3-tip')
     .html(tooltipHtml);
 
-  var partyScale = d3.scale.category20();
+  var colors = ['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600']
+
+  // var colors = ['purple', 'magenta', 'navy', 'maroon', 'teal', 'aqua', 'green', 'lime', 'olive', 'yellow']
+
+  var partyScale = d3.scale.ordinal()
+    .range(d3.shuffle(colors))
 
   var voteTotalScale = d3.scale.linear().range([0,50]);
 
@@ -24,7 +30,7 @@ module.exports = function() {
   var path = d3.geo.path()
       .projection(projection);
 
-  var svg = d3.select('body').append('svg')
+  var svg = d3.select('#map-container').append('svg')
       .attr('width', width)
       .attr('height', height)
       .call(tip)
@@ -38,10 +44,9 @@ module.exports = function() {
   var g = svg.append("g");
 
   queue()
-      .defer(d3.json, 'data/us.json')
-      .defer(d3.json, 'data/updated_senate_by_county.json')
-      // .defer(d3.json, 'data/us_and_races.json')
-      .await(ready);
+    .defer(d3.json, 'data/us.json')
+    .defer(d3.json, 'data/updated_senate_by_county.json')
+    .await(ready);
 
   function ready(error, us, racesArray) {
     races = racesArray.races
@@ -53,18 +58,39 @@ module.exports = function() {
       .enter().append('path')
         .attr('class', 'county')
         .attr('d', path)
-        .style('stroke', function(d) {
-          return d.race && d.race.length > 0 ? '#FEF' : '#FEF'
-        })
-        // .style('fill', 'url(#crosshatch)')
         .style('fill', setFill)
-        // .on('mouseover', function(d) {
-        //   console.log(d)
-        // })
-        .on('mouseover', tip.show)
+        .on('mouseover', function(d) {
+          if(d.race) {
+            tip.show(d)
+          }
+        })
         .on('mouseout', tip.hide)
         .on('click', clicked);
 
+    g.append('g')
+      .attr('id', 'states')
+      .selectAll('path')
+        .data(setStateData(us, races))
+      .enter().append('path')
+        .attr('d', path)
+        .attr('class', function(d) {
+          return d.id === 2 ? "state alaska" : "state"
+        });
+
+    //Deals with Alaska
+    d3.select('.alaska')
+      .style('fill', function(d) {
+        return partyScale(d);
+      })
+      .style('fill', setFill)
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide)
+      .on('click', clicked);
+
+    g.append('path')
+        .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+        .attr('class', 'state-borders')
+        .attr('d', path)
     // svg.append('path')
     //     .datum(topojson.mesh(states, states.objects.states, function(a, b) { return a !== b; }))
     //     .attr('class', 'states')
@@ -113,10 +139,11 @@ module.exports = function() {
         .style("fill", "#ccc")
         .text(function(d) { return bbwNumberFormat(d.votes); });
 
+    console.timeEnd('toph')
   }
 
   function setFill(d) {
-    if(d.race[0] && d.race[0].reportingUnits) {
+    if(d.race && d.race.candidates) {
       var winner = getWinner(d);
       return winner.party ? partyScale(winner.party) : 'url(#crosshatch)';
     } else {
@@ -125,11 +152,9 @@ module.exports = function() {
   }
 
   function getWinner(d) {
-    if(d.race[0] && d.race[0].reportingUnits) {
-      return  _.max(d.race[0].reportingUnits[0].candidates, function(candidate) {
-        return candidate.voteCount
-      })
-    }
+    return  _.max(d.race.candidates, function(candidate) {
+      return candidate.voteCount
+    })
   }
 
   function clicked(d) {
@@ -160,13 +185,27 @@ module.exports = function() {
   function tooltipHtml(d) {
     var winner = getWinner(d);
 
+    if(winner.name === undefined) {
+      return '<span class="winner-name">Vacant Seat</span>'
+    }
+
     return '<span class="winner-name">' + winner.name + '</span>' + '<span style="color:' + partyScale(winner.party) + '">' + winner.party + '</span>'
   }
 
   function getReportingUnitFromFipsCode(races, fipsCode) {
-    return races.filter(function(race) {
-      return race.reportingUnits[0].fipsCode === fipsCode
-    })
+    return _.findWhere(races, {fipsCode: fipsCode})
+    // return races.filter(function(race) {
+    //   return race.fipsCode === fipsCode
+    // })
+    // var returnRace = []
+    // for(var i = 0; i < races.length; i++) {
+    //   if(races[i].reportingUnits[0].fipsCode === fipsCode) {
+    //     returnRace.push(races)
+    //   }
+    // }
+    // console.log(returnRace)
+    // return returnRace
+
   }
 
   function addRacesToUs(us, races) {
@@ -179,9 +218,20 @@ module.exports = function() {
 
   }
 
+  function setStateData(us, races) {
+    var features = topojson.feature(us, us.objects.states).features
+
+    return features.map(function(feature) {
+      if(feature.id === 2) {
+        feature.race = getReportingUnitFromFipsCode(races, "2000")
+      }
+      return feature
+    })
+  }
+
   function getParties(races) {
     return _.uniq(_.flatten(races.map(function(race) {
-      return race.reportingUnits[0].candidates.map(function(candidate) {
+      return race.candidates.map(function(candidate) {
         return candidate.party;
       });
     })));
@@ -197,7 +247,7 @@ module.exports = function() {
     });
 
     races.forEach(function(race, index) {
-      race.reportingUnits[0].candidates.forEach(function(candidate, index) {
+      race.candidates.forEach(function(candidate, index) {
         _.findWhere(partyVotes, {"name": candidate.party}).votes += candidate.voteCount;
       })
     });
@@ -212,6 +262,7 @@ module.exports = function() {
     var scaler = bbwFormatPrefix(base);
     return parseFloat(scaler.scale(dolla).toPrecision(3))+scaler.symbol;
   }
+
   var bbw_formatPrefixes = [ "p", "n", "µ", "m", "", "k", "m", "b", "t" ].map(bbw_formatPrefix);
   function bbwFormatPrefix(value, precision) {
   	var i = 0;

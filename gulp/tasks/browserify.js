@@ -4,6 +4,9 @@
  var deamdify = require('deamdify');
  var libs = require('../utils/libs.js').libs;
  var connect = require('gulp-connect');
+ var uglify = require('gulp-uglify');
+ var gStreamify = require('gulp-streamify');
+
 
  module.exports = function() {
    gulp.task('browserify', function() {
@@ -22,6 +25,7 @@
      return bundle
        .bundle()
        .pipe(source('app.js'))
+       .pipe((gStreamify(uglify())))
        .pipe(gulp.dest('./build/scripts'))
        .pipe(connect.reload());
    })

@@ -6,7 +6,7 @@ var partyArray = require('./../party_abbrev.json').parties;
 
 function addPartyToCandidates(racesArray, candidates) {
   return racesArray.map(function(race) {
-    race.reportingUnits = race.reportingUnits.map(function(reportingUnit) {
+    race.data = race.reportingUnits.map(function(reportingUnit) {
       reportingUnit.candidates = reportingUnit.candidates.map(function(candidate) {
         var matchingCandidate = candidatesArray.filter(function(candidateObj) {
           return candidateObj.polID === candidate.polID
@@ -30,7 +30,8 @@ function addPartyToCandidates(racesArray, candidates) {
       var strippedReportingUnit = {fipsCode: reportingUnit.fipsCode, candidates: reportingUnit.candidates}
       return strippedReportingUnit
     })
-    var strippedRace = {reportingUnits: race.reportingUnits}
+    // var strippedRace = {reportingUnits: race.reportingUnits}
+    var strippedRace = {fipsCode: race.reportingUnits[0].fipsCode, candidates: race.reportingUnits[0].candidates}
     return strippedRace
   })
 }

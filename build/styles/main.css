@@ -1,17 +1,29 @@
 body {
   font-family: helvetica, arial, sans-serif;
-  font-size: 10pt; }
+  font-size: 10pt;
+  max-width: 960px;
+  margin: 40px auto; }
+
+p {
+  max-width: 640px; }
 
 .county {
-  stroke-width: 0.5px; }
+  stroke-width: 0.5px;
+  stroke: #FEF; }
 
 .county:hover {
   opacity: 0.5; }
 
-.states {
+#states {
+  fill: none; }
+
+.state {
+  stroke: #FEF; }
+
+.state-borders {
   fill: none;
-  stroke: none;
-  stroke-linejoin: round; }
+  stroke-linejoin: round;
+  stroke: #FEF; }
 
 .background {
   fill: none;
