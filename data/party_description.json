@@ -2,7 +2,8 @@
   "parties": [
     {
       "name": "Libertarian",
-      "description": "A party of “minimum government, maximum freedom”, promoting individuals’ rights so long as they does not interfere with others’ equal rights"
+      "description": "“The Libertarian Party is for all who don't want to push other people around and don't want to be pushed around themselves”",
+      "url": "http://www.lp.org/introduction/what-is-the-libertarian-party"
     },
     {
       "name": "Independent",
@@ -10,11 +11,38 @@
     },
     {
       "name": "Working Families",
-      "description": "“Working Families is a growing progressive political organization that fights for an economy that works for all of us, and a democracy in which every voice matters.”"
+      "description": "“Working Families is a growing progressive political organization that fights for an economy that works for all of us, and a democracy in which every voice matters”",
+      "url": "http://workingfamilies.org/about-us/"
     },
     {
       "name": "Green",
-      "description": "“Committed to environmentalism, non-violence, social justice and grassroots organizing, Greens are renewing democracy without the support of corporate donors.”"
+      "description": "“Committed to environmentalism, non-violence, social justice and grassroots organizing, Greens are renewing democracy without the support of corporate donors”",
+      "url": "http://www.gp.org/what-we-believe/about-us"
+    },
+    {
+      "name": "Constitution",
+      "description": "“It is our goal to limit the federal government to its delegated, enumerated, Constitutional functions”",
+      "url": "http://www.constitutionparty.com/the-party/mission-statement/"
+    },
+    {
+      "name": "Independence",
+      "description": "“The Independence Party of Minnesota’s platform contains 10 ‘Core Values’, 6 ‘Principals’ and 47 ‘planks’”, including cannabis legalization, balanced budgeting, and campaign finance reform",
+      "url": "http://www.mnip.org/about-us/what-we-stand-for"
+    },
+    {
+      "name": "U.S. Taxpayers",
+      "description": "The U.S. Taxpayers Party is the Michigan affiliate of the National Constitution Party",
+      "url": "http://www.ustpm.org/"
+    },
+    {
+      "name": "Mountain Party",
+      "description": "The West Virginia affiliate of the national Green Party, with a special focus on opposing mountaintop removal coal mining",
+      "url": "http://www.mtparty.org/"
+    },
+    {
+      "name": "Pacific Green",
+      "description": "The Oregon affiliate of the national Green Party",
+      "url": "http://www.pacificgreens.org/"
     }
   ]
 }
