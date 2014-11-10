@@ -24,7 +24,7 @@ module.exports = function() {
       .bundle()
       .pipe(source('vendor.js'))
       .pipe((gStreamify(uglify())))
-      .pipe(gulp.dest('./build/scripts'))
+      .pipe(gulp.dest('./public/build/scripts'))
   })
 
 }

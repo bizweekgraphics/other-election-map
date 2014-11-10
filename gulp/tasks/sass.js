@@ -6,7 +6,7 @@ module.exports = function() {
   gulp.task('sass', function () {
     gulp.src('src/**/*.scss')
       .pipe(sass())
-      .pipe(gulp.dest('./build/'))
+      .pipe(gulp.dest('./public/build/'))
       .pipe(connect.reload());
   });
 }
