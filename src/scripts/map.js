@@ -8,7 +8,6 @@ var legend = require('./legend.js');
 
 
 module.exports = function() {
-  console.time('toph')
 
   var width = parseInt(d3.select('#map-container').style('width'))
   , mapRatio = .6
@@ -136,7 +135,6 @@ module.exports = function() {
     // LEGEND
 
     legend.append(races);
-    console.timeEnd('toph')
   }
 
   function clicked(d) {
