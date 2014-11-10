@@ -11,6 +11,9 @@ p {
   pointer-events: none;
   height: 500px; }
 
+.legend-values {
+  fill: black; }
+
 @media screen and (min-width: 960px) {
   #legend-container {
     position: relative;
