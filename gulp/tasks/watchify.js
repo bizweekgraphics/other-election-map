@@ -15,7 +15,7 @@ module.exports = function() {
     bundler
     .bundle()
     .pipe(source('./src/app.js'))
-    .pipe(gulp.dest('./build/scripts'));
+    .pipe(gulp.dest('./public/build/scripts'));
 
     bundler.on('update', rebundle);
 
@@ -27,7 +27,7 @@ module.exports = function() {
       console.log('rebundling');
       return bundler.bundle()
         .pipe(source('./src/app.js'))
-        .pipe(gulp.dest('./build/scripts'))
+        .pipe(gulp.dest('./public/build/scripts'))
         .pipe(connect.reload());
     }
 

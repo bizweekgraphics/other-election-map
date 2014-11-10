@@ -73,6 +73,7 @@ module.exports = function() {
       g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
 
+    console.time('add races');
     g.append('g')
         .attr('class', 'counties')
       .selectAll('path')
@@ -86,7 +87,9 @@ module.exports = function() {
             tip.show(d)
           }
         })
-        .on('mouseout', tip.hide)
+        .on('mouseout', tip.hide);
+
+    console.timeEnd('add races');
         // .on('click', clicked)
 
         // .on('click', clicked);

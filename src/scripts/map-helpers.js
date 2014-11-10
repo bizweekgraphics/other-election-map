@@ -64,27 +64,33 @@ b3 = {
 
 
   getReportingUnitFromFipsCode: function(races, fipsCode) {
-    var reportingUnit;
+    // var reportingUnit;
 
-    for(var i = 0; typeof(reportingUnit) === "undefined" && i < races.length; i++) {
-      var race = races[i]
-      if(race.fipsCode === fipsCode) {
-        races.splice(i, 1)
-        reportingUnit = race;
-      }
-    }
+    // for(var i = 0; typeof(reportingUnit) === "undefined" && i < races.length; i++) {
+    //   var race = races[i]
+    //   if(race.fipsCode === fipsCode) {
+    //     races.splice(i, 1)
+    //     reportingUnit = race;
+    //   }
+    // }
+    return races.get(fipsCode)
 
-    return {race: reportingUnit, races: races}
+    // return {race: race, races: races}
   },
 
+  raceMap: d3.map(),
+
   addRacesToUs: function(us, races) {
+
+    races.forEach(function(race) {
+      var key = race.fipsCode
+      self.raceMap.set(key, race)
+    })
+
     var features = topojson.feature(us, us.objects.counties).features
 
     return features.map(function(feature) {
-      var reportingUnit = self.getReportingUnitFromFipsCode(races, feature.id.toString())
-      feature.race = reportingUnit.race
-      races = reportingUnit.races
-
+      feature.race = self.raceMap.get(feature.id.toString()) 
       return feature
     })
   },
@@ -94,9 +100,7 @@ b3 = {
 
     return features.map(function(feature) {
       if(feature.id === 2) {
-        var reportingUnit = self.getReportingUnitFromFipsCode(races, "2000")
-        feature.race = reportingUnit.race
-        races = reportingUnit.races
+        feature.race = self.raceMap.get("2000")
       }
       return feature
     })
