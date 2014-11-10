@@ -1,13 +1,15 @@
 # Best of the Rest: The Other Election Map
 
-If you block out the disk of the Sun, as in an eclipse, you see its corona: a wild, undulating aura of plasma loops, arcs, jets, and holes. There, past the transition region above the chromosphere, gravity no longer holds sway; behavior is instead dominated by magnetic forces, field lines made manifest.
+If you block out the disk of the Sun, as in an eclipse, you see its corona: a wild aura of plasma loops, arcs, and jets, where gravity no longer holds sway. And so it is in American politics!
 
-And so it is in American politics! If we blot out the dominant bipole of Republicans and Democrats, we see a dynamic menagerie driven less by pragmatism than protest votes, outlets for ejections of civic angst. Below, explore a map of the leading U.S. Senate candidate in every county, excluding the two major parties.
+If we blot out the red-blue bipole, we see a polychrome network of small beginnings, rarely to become a big thing. It is driven less by pragmatism and partisan sentiment than by protest votes, outlets for ejections of civic angst.
+
+The map below shows which candidate and party received the most votes in each county in last week's U.S. Senate election, excluding Democrats and Republicans. None of the candidates shown actually won.
 
 [ map ]
 
-Delaware victor **Andrew Groff** (Green) promises, "We will not be slaves to corporate political party manipulation." http://www.andrewgroffforsenate.us/?page_id=2 Airline pilot **Curt Gottshall** (Independent) takes the Wyoming seat on a platform of returning "honor and integrity" to Washington. http://www.curtgottshall2014.com/about-1.html **Bob Baber** of the West Virginia Mountain Party, which opposes mountaintop removal coal mining, describes his fiscal responsibility as "tight as the bark on a tree". http://youtu.be/TdQj20ZYltU?t=1m5s
+(Cross-hatched areas had no significant minor party candidate, and blank areas had no election. The colors are randomized so as not to reify the unreal.)
 
-Beneath the red and blue is a polychrome network of small beginnings, rarely to become a big thing.
+The Libertarian Party received the third most votes nationally, with 846,000 of the TK total votes cast across a broad swath of states. The Green Party shows up prominently on the Mexican border, across Arkansas, and in Delaware, with local affiliates West Virginia Mountain Party and Oregon Pacific Green Party also placing 3rd in some counties.
 
-"And as the evening twilight fades away / The sky is filled with stars, invisible by day." —Henry Wadsworth Longfellow
+But it would be a mistake to infer too much from such a map; the slate of candidates lower down on the ballot can be erratic. In particulars there is meaning, but in general it is noise. It is the colors of a television tuned to a dead channel; the sound of a radio between stations. It is our background radiation.
