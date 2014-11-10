@@ -89,10 +89,6 @@ module.exports = function() {
         .on('mouseout', tip.hide)
         // .on('click', clicked)
 
-    if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-      d3.selectAll('.county')
-        .on('click', clicked)
-    }
         // .on('click', clicked);
 
     // zoomListener(g);
@@ -118,10 +114,12 @@ module.exports = function() {
       .on('mouseout', tip.hide)
 
     if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      d3.selectAll('.county')
+        .on('click', clicked);
+
       d3.select('.alaska')
         .on('click', clicked)
     }
-
 
     g.append('path')
         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
