@@ -10,7 +10,7 @@ module.exports = function() {
 
   gulp.task('vendor', function() {
     var opts = {
-      debug: false
+      debug: true
     }
 
     var bundle = browserify(opts)

@@ -26,10 +26,6 @@ module.exports = function() {
       .scale(scaleWidth)
       .translate([width / 2, height / 2]);
 
-      var zoomListener = d3.behavior.zoom()
-        .scaleExtent([0.1, 3])
-        .on("zoom", zoomHandler)
-
   var path = d3.geo.path()
       .projection(projection);
 
@@ -54,6 +50,22 @@ module.exports = function() {
   function ready(error, us, racesArray) {
     races = racesArray.races
 
+    var zoomListener = d3.behavior.zoom()
+      .scaleExtent([0.1, 3])
+      .on("zoom", zoomHandler)
+
+    var dragListener = d3.behavior.drag()
+      .on('drag', function(d) {
+        console.log('drag');
+        // if(d.race) {
+        //   tip.show(d)
+        // }
+      })
+
+    function zoomHandler() {
+      g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
+
     g.append('g')
         .attr('class', 'counties')
       .selectAll('path')
@@ -62,20 +74,23 @@ module.exports = function() {
         .attr('class', 'county')
         .attr('d', path)
         .style('fill', b3.setFill)
-        // .on('dragstart', function(d) {
-        //   d3.event.sourceEvent.stopPropagation();
-        //   console.log('drag start');
-        //   tip.show(d)
-        // })
         .on('mouseover', function(d) {
           if(d.race) {
             tip.show(d)
           }
         })
         .on('mouseout', tip.hide)
-        .on('click', clicked);
+        // .on('click', clicked)
+
+    if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      d3.selectAll('.county')
+        .on('click', clicked)
+    }
+        // .on('click', clicked);
 
     // zoomListener(g);
+
+    // dragListener(g)
 
     g.append('g')
       .attr('id', 'states')
@@ -88,13 +103,18 @@ module.exports = function() {
         });
 
     //Deals with Alaska
-    d3.select('.alaska')
+    var alaska = d3.select('.alaska')
       .style('fill', function(d) {
         return b3.partyScale(d);
       })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
-      .on('click', clicked);
+
+    if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      d3.select('.alaska')
+        .on('click', clicked)
+    }
+
 
     g.append('path')
         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
@@ -109,10 +129,6 @@ module.exports = function() {
 
     legend.append(races);
     console.timeEnd('toph')
-  }
-
-  function zoomHandler() {
-    g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
   }
 
   function clicked(d) {
