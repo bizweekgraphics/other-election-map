@@ -102,6 +102,25 @@ b3 = {
     })
   },
 
+  setFill: function(d) {
+    if(d.race && d.race.candidates) {
+      var winner = b3.getWinner(d);
+      return winner.party ? b3.partyScale(winner.party) : 'url(#crosshatch)';
+    } else {
+      return 'white'
+    }
+  },
+
+  toolTipHtml: function(d) {
+    var winner = self.getWinner(d);
+
+    if(winner.name === undefined) {
+      return '<span class="winner-name">Vacant Seat</span>'
+    }
+
+    return '<span class="winner-name">' + winner.name + '</span>' + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span>'
+  },
+
   formatPrefixes: prefixes,
 
   bbwNumberFormat: function(dolla) {

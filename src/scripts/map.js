@@ -9,9 +9,6 @@ var legend = require('./legend.js');
 
 module.exports = function() {
   console.time('toph')
-  // var width = 960,
-  //     height = 650,
-  //     centered;
 
   var width = parseInt(d3.select('#map-container').style('width'))
   , mapRatio = .6
@@ -22,11 +19,6 @@ module.exports = function() {
   var tip = d3.tip()
     .attr('class', 'd3-tip')
     .html(tooltipHtml);
-
-  var colors = ['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600']
-
-  // var colors = ['purple', 'magenta', 'navy', 'maroon', 'teal', 'aqua', 'green', 'lime', 'olive', 'yellow']
-
 
   var voteTotalScale = d3.scale.linear().range([0,50]);
 
@@ -59,10 +51,6 @@ module.exports = function() {
     .defer(d3.json, 'data/updated_senate_by_county.json')
     .await(ready);
 
-  // d3.select(window).on('resize', resize);
-
-
-
   function ready(error, us, racesArray) {
     races = racesArray.races
 
@@ -73,7 +61,7 @@ module.exports = function() {
       .enter().append('path')
         .attr('class', 'county')
         .attr('d', path)
-        .style('fill', setFill)
+        .style('fill', b3.setFill)
         // .on('dragstart', function(d) {
         //   d3.event.sourceEvent.stopPropagation();
         //   console.log('drag start');
@@ -121,15 +109,6 @@ module.exports = function() {
 
     legend.append(races);
     console.timeEnd('toph')
-  }
-
-  function setFill(d) {
-    if(d.race && d.race.candidates) {
-      var winner = b3.getWinner(d);
-      return winner.party ? b3.partyScale(winner.party) : 'url(#crosshatch)';
-    } else {
-      return 'white'
-    }
   }
 
   function zoomHandler() {
