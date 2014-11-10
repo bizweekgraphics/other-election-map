@@ -42,6 +42,14 @@ module.exports = function() {
 
   var g = svg.append("g");
 
+  var message = {
+    method: 'resize',
+    height: document.documentElement.scrollHeight
+  }
+
+  window.parent.postMessage(message, '*');
+
+
   queue()
     .defer(d3.json, 'data/us.json')
     .defer(d3.json, 'data/updated_senate_by_county.json')
