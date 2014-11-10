@@ -22,7 +22,7 @@ var legend = {
       var legendMarginRight = 100;
       var legendWidth = width
     }
-    var legendHeight = 200;
+    var legendHeight = 150;
 
     var legendContainer = d3.select('#legend-container').append('svg')
       .attr('height', legendHeight)
