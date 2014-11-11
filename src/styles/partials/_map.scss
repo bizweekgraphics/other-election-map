@@ -14,8 +14,12 @@ p {
 }
 
 #legend-container {
-  pointer-events: none;
+  // pointer-events: none;
   height: 200px;
+}
+
+.legend {
+  pointer-events: all;
 }
 
 .legend-values {

@@ -24,7 +24,18 @@ var legend = {
     }
     var legendHeight = 200;
 
-    var legendContainer = d3.select('#legend-container').append('svg')
+    var legendContainer = d3.select('#legend-container')
+      .on('mouseleave', function() {
+        console.log('mouseout');
+        d3.selectAll('.county')
+          .style('fill', b3.setFill)
+
+        d3.select('.alaska')
+          .style('fill', function(d) {
+            return b3.partyScale('Libertarian')
+          })
+      })
+      .append('svg')
       .attr('height', legendHeight)
       .attr('width', width)
 
@@ -37,11 +48,28 @@ var legend = {
       .style("font-weight", "bold")
       .text("National vote total")
 
+
     var legend = legendContainer.selectAll(".legend")
         .data(self.partyVotes)
       .enter().append("g")
         .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate(0," + (i * legendLineHeight + (self.partyVotes.length*legendLineHeight - 125)) + ")"; });
+        .attr("transform", function(d, i) { return "translate(0," + (i * legendLineHeight + (self.partyVotes.length*legendLineHeight - 125)) + ")"; })
+        .on('mouseover', function(d) {
+          d3.select('.alaska')
+            .style('fill', function(data) {
+              return d.name === b3.getWinner(data).party ? b3.partyScale('Libertarian') : 'white'
+            })
+
+
+          d3.selectAll('.county')
+            .style('fill', function(data) {
+              return data.race && data.race.candidates && d.name === b3.getWinner(data).party ? b3.partyScale(d.name) : 'white'
+            })
+        })
+        // .on('mouseout', function(d) {
+        //   d3.selectAll('.county')
+        //     .style('fill', b3.setFill);
+        // })
 
     legend.append("rect")
         .attr("x", legendWidth - legendMarginRight)
@@ -49,6 +77,7 @@ var legend = {
         .attr("height", legendLineHeight - 2)
         .style("fill", function(d) { 
           return b3.partyScale(d.name); });
+
 
     legend.append("text")
         .attr("x", legendWidth - legendMarginRight - 4)
