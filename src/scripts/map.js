@@ -20,7 +20,7 @@ module.exports = function() {
     .html(tooltipHtml);
 
   var voteTotalScale = d3.scale.linear().range([0,50]),
-      voteCountyTotalScale = d3.scale.log().range([0.5,1]);
+      voteCountyTotalScale = d3.scale.log().range([0.35,1]);
 
   var projection = d3.geo.albersUsa()
       .scale(scaleWidth)
@@ -175,7 +175,9 @@ module.exports = function() {
       return '<span class="winner-name">Vacant Seat</span>'
     }
 
-    return '<span class="winner-name">' + winner.name + '</span>' + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span>'
+    return '<span class="winner-name">' + winner.name + '</span>'
+      + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span> '
+      + '<span class="votes">' + b3.bbwNumberFormat(winner.voteCount) + '</span>';
   }
 
 
