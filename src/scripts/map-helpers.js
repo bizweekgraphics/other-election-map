@@ -25,7 +25,7 @@ b3 = {
 
   partyScale: d3.scale.ordinal()
     .range(colors),
- 
+
   getWinner: function(d) {
     return  _.max(d.race.candidates, function(candidate) {
       return candidate.voteCount
@@ -90,7 +90,7 @@ b3 = {
     var features = topojson.feature(us, us.objects.counties).features
 
     return features.map(function(feature) {
-      feature.race = self.raceMap.get(feature.id.toString()) 
+      feature.race = self.raceMap.get(feature.id.toString())
       return feature
     })
   },
@@ -104,6 +104,14 @@ b3 = {
       }
       return feature
     })
+  },
+
+  getMaxVoteCount: function(races) {
+    return _.max(races.map(function(race) {
+      return _.max(race.candidates.map(function(c) {
+        return c.voteCount;
+      }));
+    }));
   },
 
   setFill: function(d) {
@@ -152,7 +160,3 @@ var self = b3
 
 
 module.exports = b3;
-
-
-
-

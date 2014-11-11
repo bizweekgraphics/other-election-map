@@ -19,7 +19,8 @@ module.exports = function() {
     .attr('class', 'd3-tip')
     .html(tooltipHtml);
 
-  var voteTotalScale = d3.scale.linear().range([0,50]);
+  var voteTotalScale = d3.scale.linear().range([0,50]),
+      voteCountyTotalScale = d3.scale.log().range([0.25,1]);
 
   var projection = d3.geo.albersUsa()
       .scale(scaleWidth)
@@ -57,6 +58,8 @@ module.exports = function() {
   function ready(error, us, racesArray) {
     races = racesArray.races
 
+    voteCountyTotalScale.domain([1,b3.getMaxVoteCount(races)]);
+
     var zoomListener = d3.behavior.zoom()
       .scaleExtent([0.1, 3])
       .on("zoom", zoomHandler)
@@ -81,6 +84,10 @@ module.exports = function() {
         .attr('class', 'county')
         .attr('d', path)
         .style('fill', b3.setFill)
+        .style('opacity', function(d) {
+          if(!d.race || !d.race.candidates) return 1;
+          return voteCountyTotalScale(_.max(d.race.candidates.map(function(e) {return e.voteCount;})));
+        })
         .on('mouseover', function(d) {
           if(d.race) {
             tip.show(d)
