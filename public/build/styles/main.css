@@ -20,8 +20,7 @@ p {
   #legend-container {
     position: relative;
     bottom: 200px;
-    height: 0px; }
- }
+    height: 0px; } }
 
 .county {
   stroke-width: 0.5px;

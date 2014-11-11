@@ -1,4 +1,5 @@
 var d3 = require('d3');
+d3.tip = require('./vendor/d3-tip')(d3);
 var b3 = require('./map-helpers.js');
 var _ = require('underscore');
 
@@ -39,6 +40,12 @@ var legend = {
       .attr('height', legendHeight)
       .attr('width', width)
 
+    // create tooltip instance
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .html(function(d) { return JSON.stringify(d); });
+    legendContainer.call(tip);
+
     legendContainer
       .append("text")
       .attr("x", legendWidth - legendMarginRight)
@@ -60,22 +67,21 @@ var legend = {
               return d.name === b3.getWinner(data).party ? b3.partyScale('Libertarian') : 'white'
             })
 
-
           d3.selectAll('.county')
             .style('fill', function(data) {
               return data.race && data.race.candidates && d.name === b3.getWinner(data).party ? b3.partyScale(d.name) : 'white'
             })
+
+          tip.show(d);
         })
-        // .on('mouseout', function(d) {
-        //   d3.selectAll('.county')
-        //     .style('fill', b3.setFill);
-        // })
+        .on('mouseout', tip.hide);
+
 
     legend.append("rect")
         .attr("x", legendWidth - legendMarginRight)
         .attr("width", function(d) { return self.voteTotalScale(d.votes); })
         .attr("height", legendLineHeight - 2)
-        .style("fill", function(d) { 
+        .style("fill", function(d) {
           return b3.partyScale(d.name); });
 
 
@@ -122,4 +128,3 @@ var legend = {
 var self = legend
 
 module.exports = legend
-
