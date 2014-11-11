@@ -20,8 +20,7 @@ p {
   #legend-container {
     position: relative;
     bottom: 200px;
-    height: 0px; }
- }
+    height: 0px; } }
 
 .county {
   stroke-width: 0.5px;
@@ -51,7 +50,8 @@ p {
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   border-radius: 2px;
-  pointer-events: none; }
+  pointer-events: none;
+  max-width: 300px; }
 
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
