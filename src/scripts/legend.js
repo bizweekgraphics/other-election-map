@@ -48,9 +48,6 @@ var legend = {
         .attr("width", function(d) { return self.voteTotalScale(d.votes); })
         .attr("height", legendLineHeight - 2)
         .style("fill", function(d) { 
-          console.log(b3.partyScale.range());
-          console.log(d.name);
-          console.log(b3.partyScale(d.name))
           return b3.partyScale(d.name); });
 
     legend.append("text")

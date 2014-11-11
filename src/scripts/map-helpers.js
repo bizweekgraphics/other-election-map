@@ -3,8 +3,7 @@ var _ = require('underscore');
 var topojson = require('topojson');
 
 var b3;
-var colors = d3.shuffle(['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600'])
-
+var colors = d3.shuffle(['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600', '#CC9900', '#6666FF'])
 
 var bbw_formatPrefix = function(d, i) {
   var k = Math.pow(10, Math.abs(4 - i) * 3);

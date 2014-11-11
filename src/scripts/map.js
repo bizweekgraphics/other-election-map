@@ -116,7 +116,7 @@ module.exports = function() {
     //Deals with Alaska
     var alaska = d3.select('.alaska')
       .style('fill', function(d) {
-        return b3.partyScale(d);
+        return b3.partyScale('Libertarian');
       })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
@@ -175,11 +175,9 @@ module.exports = function() {
       return '<span class="winner-name">Vacant Seat</span>'
     }
 
-    return 'test'
-
-    // return '<span class="winner-name">' + winner.name + '</span>'
-    //   + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span> '
-    //   + '<span class="votes">' + d3.format(",")(winner.voteCount) + '</span>';
+    return '<span class="winner-name">' + winner.name + '</span>'
+      + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span> '
+      + '<span class="votes">' + d3.format(",")(winner.voteCount) + '</span>';
   }
 
 
