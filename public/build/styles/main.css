@@ -8,7 +8,6 @@ p {
   max-width: 640px; }
 
 #legend-container {
-  pointer-events: none;
   height: 200px; }
 
 .legend {

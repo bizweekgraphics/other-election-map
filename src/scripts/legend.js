@@ -24,7 +24,18 @@ var legend = {
     }
     var legendHeight = 200;
 
-    var legendContainer = d3.select('#legend-container').append('svg')
+    var legendContainer = d3.select('#legend-container')
+      .on('mouseleave', function() {
+        console.log('mouseout');
+        d3.selectAll('.county')
+          .style('fill', b3.setFill)
+
+        d3.select('.alaska')
+          .style('fill', function(d) {
+            return b3.partyScale('Libertarian')
+          })
+      })
+      .append('svg')
       .attr('height', legendHeight)
       .attr('width', width)
 
@@ -37,20 +48,8 @@ var legend = {
       .style("font-weight", "bold")
       .text("National vote total")
 
-    var innerLegend = legendContainer
-      .append('g')
-      .attr('class', 'inner-legend')
-      .on('mouseout', function() {
-        d3.selectAll('.county')
-          .style('fill', b3.setFill)
 
-        d3.select('.alaska')
-          .style('fill', function(d) {
-            return b3.partyScale('Libertarian')
-          })
-      })
-
-    var legend = innerLegend.selectAll(".legend")
+    var legend = legendContainer.selectAll(".legend")
         .data(self.partyVotes)
       .enter().append("g")
         .attr("class", "legend")
