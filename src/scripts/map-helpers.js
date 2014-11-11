@@ -51,31 +51,12 @@ b3 = {
 
     races.forEach(function(race, index) {
       race.candidates.forEach(function(candidate, index) {
-        if(candidate.voteCount === 66) {
-          console.log(race, candidate)
-        }
         _.findWhere(partyVotes, {"name": candidate.party}).votes += candidate.voteCount;
       })
 
     });
 
     return partyVotes;
-  },
-
-
-  getReportingUnitFromFipsCode: function(races, fipsCode) {
-    // var reportingUnit;
-
-    // for(var i = 0; typeof(reportingUnit) === "undefined" && i < races.length; i++) {
-    //   var race = races[i]
-    //   if(race.fipsCode === fipsCode) {
-    //     races.splice(i, 1)
-    //     reportingUnit = race;
-    //   }
-    // }
-    return races.get(fipsCode)
-
-    // return {race: race, races: races}
   },
 
   raceMap: d3.map(),
