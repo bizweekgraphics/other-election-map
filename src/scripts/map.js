@@ -9,7 +9,7 @@ var legend = require('./legend.js');
 
 module.exports = function() {
 
-  (function(){
+  var resize = (function(){
       var windowId = '';
       var resizeCount = 0;
       var useString = false;
@@ -52,9 +52,7 @@ module.exports = function() {
 
       return resize;
     })();
-
-
-
+    
   var width = parseInt(d3.select('#map-container').style('width'))
   , mapRatio = .6
   , height = width * mapRatio
@@ -179,6 +177,7 @@ module.exports = function() {
     // LEGEND
 
     legend.append(races);
+    resize();
   }
 
   function clicked(d) {
