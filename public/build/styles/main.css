@@ -11,6 +11,9 @@ p {
   pointer-events: none;
   height: 200px; }
 
+.legend {
+  pointer-events: all; }
+
 .legend-values {
   fill: black; }
 
