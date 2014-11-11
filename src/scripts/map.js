@@ -20,7 +20,7 @@ module.exports = function() {
     .html(tooltipHtml);
 
   var voteTotalScale = d3.scale.linear().range([0,50]),
-      voteCountyTotalScale = d3.scale.log().range([0.25,1]);
+      voteCountyTotalScale = d3.scale.log().range([0.5,1]);
 
   var projection = d3.geo.albersUsa()
       .scale(scaleWidth)

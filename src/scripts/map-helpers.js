@@ -108,6 +108,11 @@ b3 = {
 
   getMaxVoteCount: function(races) {
     return _.max(races.map(function(race) {
+      // exception for alaska
+      if(race.fipsCode == 2000) return 0;
+      // exception for state entries
+      if(!race.fipsCode) return 0;
+      // otherwise return top vote count
       return _.max(race.candidates.map(function(c) {
         return c.voteCount;
       }));
