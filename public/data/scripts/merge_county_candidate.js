@@ -48,7 +48,7 @@ function getPartyNameFromAbbrv(abbrv) {
 }
 
 function writeFile(json) {
-  fs.writeFile('../updated_senate_by_county.json', JSON.stringify(json, undefined, 2), function(err) {
+  fs.writeFile('../updated_senate_by_county.json', JSON.stringify(json), function(err) {
     err ? console.log(err) : console.log("JSON SAVED")
   })
 }
