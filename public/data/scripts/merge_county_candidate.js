@@ -14,6 +14,10 @@ function addPartyToCandidates(racesArray, candidates) {
  
         var partyAbbrv = matchingCandidate[0].party;
 
+        if(partyAbbrv === 'Una') {
+          partyAbbrv = 'Ind'
+        }
+
         if(partyAbbrv !== "Dem" && partyAbbrv !== "GOP") {
           candidate.party = getPartyNameFromAbbrv(partyAbbrv);
 
