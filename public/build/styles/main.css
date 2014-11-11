@@ -50,7 +50,8 @@ p {
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   border-radius: 2px;
-  pointer-events: none; }
+  pointer-events: none;
+  max-width: 300px; }
 
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
