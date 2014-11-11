@@ -10,6 +10,7 @@ var legend = require('./legend.js');
 module.exports = function() {
 
   var resize = (function(){
+      console.log('TEST');
       var windowId = '';
       var resizeCount = 0;
       var useString = false;
@@ -52,7 +53,7 @@ module.exports = function() {
 
       return resize;
     })();
-    
+
   var width = parseInt(d3.select('#map-container').style('width'))
   , mapRatio = .6
   , height = width * mapRatio
