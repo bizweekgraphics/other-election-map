@@ -37,15 +37,6 @@ var legend = {
       .style("font-weight", "bold")
       .text("National vote total")
 
-    // var invalidLegend = legendContainer.append('g')
-    //     .attr('class', 'legend')
-    //     .attr('transform', function(d,i) { return "translate(0,0)"});
-    // invalidLegend.append('rect')
-    //     .attr('width', legendLineHeight - 2)
-    //     .attr('height', legendLineHeight - 2)
-    //     .style('fill', 'red');
-
-
     var legend = legendContainer.selectAll(".legend")
         .data(self.partyVotes)
       .enter().append("g")
@@ -56,7 +47,11 @@ var legend = {
         .attr("x", legendWidth - legendMarginRight)
         .attr("width", function(d) { return self.voteTotalScale(d.votes); })
         .attr("height", legendLineHeight - 2)
-        .style("fill", function(d) { return b3.partyScale(d.name); });
+        .style("fill", function(d) { 
+          console.log(b3.partyScale.range());
+          console.log(d.name);
+          console.log(b3.partyScale(d.name))
+          return b3.partyScale(d.name); });
 
     legend.append("text")
         .attr("x", legendWidth - legendMarginRight - 4)
@@ -101,3 +96,4 @@ var legend = {
 var self = legend
 
 module.exports = legend
+

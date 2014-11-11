@@ -3,7 +3,10 @@ var _ = require('underscore');
 var topojson = require('topojson');
 
 var b3;
-var colors = d3.shuffle(['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600'])
+// var colors = d3.shuffle(['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600'])
+
+var colors = ['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600']
+
 
 var bbw_formatPrefix = function(d, i) {
   var k = Math.pow(10, Math.abs(4 - i) * 3);
@@ -25,7 +28,7 @@ b3 = {
 
   partyScale: d3.scale.ordinal()
     .range(colors),
-
+ 
   getWinner: function(d) {
     return  _.max(d.race.candidates, function(candidate) {
       return candidate.voteCount
@@ -71,7 +74,7 @@ b3 = {
     var features = topojson.feature(us, us.objects.counties).features
 
     return features.map(function(feature) {
-      feature.race = self.raceMap.get(feature.id.toString())
+      feature.race = self.raceMap.get(feature.id.toString()) 
       return feature
     })
   },
@@ -85,19 +88,6 @@ b3 = {
       }
       return feature
     })
-  },
-
-  getMaxVoteCount: function(races) {
-    return _.max(races.map(function(race) {
-      // exception for alaska
-      if(race.fipsCode == 2000) return 0;
-      // exception for state entries
-      if(!race.fipsCode) return 0;
-      // otherwise return top vote count
-      return _.max(race.candidates.map(function(c) {
-        return c.voteCount;
-      }));
-    }));
   },
 
   setFill: function(d) {
@@ -146,3 +136,7 @@ var self = b3
 
 
 module.exports = b3;
+
+
+
+
