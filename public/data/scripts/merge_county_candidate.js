@@ -53,5 +53,32 @@ function writeFile(json) {
   })
 }
 
-var races = addPartyToCandidates(racesArray, candidatesArray)
-writeFile({races: races});
+function mergeMatches(races) {
+  var newRaces = []
+
+  races.forEach(function(race, idx) {
+    var matchingRace = newRaces.filter(function(r) {
+      return r.fipsCode && r.fipsCode === race.fipsCode
+    })
+
+    if(!matchingRace[0]) {
+      var raceMatch = races.filter(function(r, i) {
+        return r.fipsCode && r.fipsCode === race.fipsCode && i !== idx
+      })[0]
+
+      if(raceMatch) {
+        race.candidates = race.candidates.concat(raceMatch.candidates)
+      }
+
+      newRaces.push(race)
+    } 
+  })
+
+
+  return newRaces
+}
+
+var races = addPartyToCandidates(racesArray, candidatesArray);
+var mergedRaces = mergeMatches(races);
+
+writeFile({races: mergedRaces});
