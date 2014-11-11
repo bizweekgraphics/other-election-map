@@ -9,6 +9,51 @@ var legend = require('./legend.js');
 
 module.exports = function() {
 
+  var resize = (function(){
+      console.log('TEST');
+      var windowId = '';
+      var resizeCount = 0;
+      var useString = false;
+
+      window.addEventListener(
+        "message",
+        function(event){
+          var data = event.data
+          if (data.substring){
+            useString = true;
+            data = JSON.parse(data)
+          }
+          if(data.method === "register"){
+            windowId = data.windowId;
+            resize();
+          }
+        },
+        false);
+
+      function resize(){
+        if (windowId === '') return
+        resizeCount++;
+
+        var message = {
+          method: "resize",
+          windowId: windowId,
+          height: document.documentElement.scrollHeight
+        } 
+
+        window.parent.postMessage(useString ? JSON.stringify(message) : message, '*')
+      }
+
+      resize.windowId = function(){
+        return windowId;
+      }
+
+      resize.resizeCount = function(){
+        return resizeCount;
+      }
+
+      return resize;
+    })();
+
   var width = parseInt(d3.select('#map-container').style('width'))
   , mapRatio = .6
   , height = width * mapRatio
@@ -41,14 +86,6 @@ module.exports = function() {
       .on("click", clicked)
 
   var g = svg.append("g");
-
-  var message = {
-    method: 'resize',
-    height: document.documentElement.scrollHeight
-  }
-
-  window.parent.postMessage(message, '*');
-
 
   queue()
     .defer(d3.json, 'data/us.json')
@@ -141,6 +178,7 @@ module.exports = function() {
     // LEGEND
 
     legend.append(races);
+    resize();
   }
 
   function clicked(d) {

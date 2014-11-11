@@ -14,8 +14,12 @@ p {
 }
 
 #legend-container {
-  pointer-events: none;
+  // pointer-events: none;
   height: 200px;
+}
+
+.legend {
+  pointer-events: all;
 }
 
 .legend-values {
@@ -66,6 +70,7 @@ p {
   color: #fff;
   border-radius: 2px;
   pointer-events: none;
+  max-width: 300px;
 }
 
 /* Creates a small triangle extender for the tooltip */
