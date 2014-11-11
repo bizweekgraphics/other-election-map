@@ -175,9 +175,11 @@ module.exports = function() {
       return '<span class="winner-name">Vacant Seat</span>'
     }
 
-    return '<span class="winner-name">' + winner.name + '</span>'
-      + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span> '
-      + '<span class="votes">' + d3.format(",")(winner.voteCount) + '</span>';
+    return 'test'
+
+    // return '<span class="winner-name">' + winner.name + '</span>'
+    //   + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span> '
+    //   + '<span class="votes">' + d3.format(",")(winner.voteCount) + '</span>';
   }
 
 

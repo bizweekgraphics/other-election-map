@@ -3,9 +3,7 @@ var _ = require('underscore');
 var topojson = require('topojson');
 
 var b3;
-// var colors = d3.shuffle(['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600'])
-
-var colors = ['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600']
+var colors = d3.shuffle(['#FF00FF', '#CC00FF', '#00FF00', '#FFFF00', '#00FFFF', '#CCFF00', '#FFCC00', '#00FF99', '#6600CC', '#FF0099', '#006666', '#006600'])
 
 
 var bbw_formatPrefix = function(d, i) {
@@ -79,6 +77,19 @@ b3 = {
     })
   },
 
+  getMaxVoteCount: function(races) {
+    return _.max(races.map(function(race) {
+      // exception for alaska
+      if(race.fipsCode == 2000) return 0;
+      // exception for state entries
+      if(!race.fipsCode) return 0;
+      // otherwise return top vote count
+      return _.max(race.candidates.map(function(c) {
+        return c.voteCount;
+      }));
+    }));
+  },
+
   setStateData: function(us, races) {
     var features = topojson.feature(us, us.objects.states).features
 
@@ -97,16 +108,6 @@ b3 = {
     } else {
       return 'white'
     }
-  },
-
-  toolTipHtml: function(d) {
-    var winner = self.getWinner(d);
-
-    if(winner.name === undefined) {
-      return '<span class="winner-name">Vacant Seat</span>'
-    }
-
-    return '<span class="winner-name">' + winner.name + '</span>' + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span>'
   },
 
   formatPrefixes: prefixes,
