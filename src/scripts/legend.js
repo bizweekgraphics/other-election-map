@@ -39,6 +39,10 @@ var legend = {
           .style('fill', function(d) {
             return b3.partyScale('Libertarian')
           })
+          .style('opacity', function(d) {
+            return b3.voteCountyTotalScale(_.max(d.race.candidates.map(function(e) {return e.voteCount;})));
+          })
+
       })
       .append('svg')
       .attr('height', legendHeight)
@@ -65,6 +69,10 @@ var legend = {
           d3.select('.alaska')
             .style('fill', function(data) {
               return d.name === b3.getWinner(data).party ? b3.partyScale('Libertarian') : 'white'
+            })
+            .style('opacity', function(data) {
+              var partyMatch = _.findWhere(data.race.candidates, {party: party})
+              return partyMatch ? b3.voteCountyHoverTotalScale(partyMatch.voteCount) : 'white'
             })
 
 

@@ -157,6 +157,9 @@ module.exports = function() {
       })
       .on('mouseover', tip.show)
       .on('mouseout', tip.hide)
+      .style('opacity', function(d) {
+        return b3.voteCountyTotalScale(_.max(d.race.candidates.map(function(e) {return e.voteCount;})));
+      })
 
     if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       d3.selectAll('.county')
