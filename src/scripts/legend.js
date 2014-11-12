@@ -1,61 +1,10 @@
 var d3 = require('d3');
-d3.tip = require('./vendor/d3-tip')(d3);
 var b3 = require('./map-helpers.js');
 var _ = require('underscore');
 
-// party descriptions, sorry not loading async!
-var partyDescriptions = [
-  {
-    "name": "Libertarian",
-    "description": "“The Libertarian Party is for all who don't want to push other people around and don't want to be pushed around themselves”",
-    "url": "http://www.lp.org/introduction/what-is-the-libertarian-party"
-  },
-  {
-    "name": "Independent",
-    "description": "Independent candidates are not affiliated with any political party"
-  },
-  {
-    "name": "Petitioning Candidate",
-    "description": "A candidate unaffiliated with a recognized party may get on the ballot by collecting enough signatures on a petition; rules vary by state."
-  },
-  {
-    "name": "Working Families",
-    "description": "“Working Families is a growing progressive political organization that fights for an economy that works for all of us, and a democracy in which every voice matters”",
-    "url": "http://workingfamilies.org/about-us/"
-  },
-  {
-    "name": "Green",
-    "description": "“Committed to environmentalism, non-violence, social justice and grassroots organizing, Greens are renewing democracy without the support of corporate donors”",
-    "url": "http://www.gp.org/what-we-believe/about-us"
-  },
-  {
-    "name": "Constitution",
-    "description": "“It is our goal to limit the federal government to its delegated, enumerated, Constitutional functions”",
-    "url": "http://www.constitutionparty.com/the-party/mission-statement/"
-  },
-  {
-    "name": "Independence",
-    "description": "“The Independence Party of Minnesota’s platform contains 10 ‘Core Values’, 6 ‘Principals’ and 47 ‘planks’”, including cannabis legalization, balanced budgeting, and campaign finance reform",
-    "url": "http://www.mnip.org/about-us/what-we-stand-for"
-  },
-  {
-    "name": "U.S. Taxpayers",
-    "description": "The U.S. Taxpayers Party is the Michigan affiliate of the National Constitution Party",
-    "url": "http://www.ustpm.org/"
-  },
-  {
-    "name": "Mountain Party",
-    "description": "The West Virginia affiliate of the national Green Party, with a special focus on opposing mountaintop removal coal mining",
-    "url": "http://www.mtparty.org/"
-  },
-  {
-    "name": "Pacific Green",
-    "description": "The Oregon affiliate of the national Green Party",
-    "url": "http://www.pacificgreens.org/"
-  }
-];
-
 var legend = {
+
+
 
   voteTotalScale: d3.scale.linear()
                     .range([0,50]),
@@ -79,9 +28,12 @@ var legend = {
 
     var legendContainer = d3.select('#legend-container')
       .on('mouseleave', function() {
-        console.log('mouseout');
         d3.selectAll('.county')
           .style('fill', b3.setFill)
+          .style('opacity', function(d) {
+            if(!d.race || !d.race.candidates) return 1;
+            return b3.voteCountyTotalScale(_.max(d.race.candidates.map(function(e) {return e.voteCount;})));
+          })
 
         d3.select('.alaska')
           .style('fill', function(d) {
@@ -91,14 +43,6 @@ var legend = {
       .append('svg')
       .attr('height', legendHeight)
       .attr('width', width)
-
-    // create tooltip instance
-    var tip = d3.tip()
-      .attr('class', 'd3-tip')
-      .html(function(d) {
-        return _.findWhere(partyDescriptions, {name: d.name }).description
-      });
-    legendContainer.call(tip);
 
     legendContainer
       .append("text")
@@ -116,26 +60,38 @@ var legend = {
         .attr("class", "legend")
         .attr("transform", function(d, i) { return "translate(0," + (i * legendLineHeight + (self.partyVotes.length*legendLineHeight - 125)) + ")"; })
         .on('mouseover', function(d) {
+          var party = d.name
+
           d3.select('.alaska')
             .style('fill', function(data) {
               return d.name === b3.getWinner(data).party ? b3.partyScale('Libertarian') : 'white'
             })
 
+
+
           d3.selectAll('.county')
+            // .style('fill', function(data) {
+            //   return data.race && data.race.candidates && d.name === b3.getWinner(data).party ? b3.partyScale(d.name) : 'white'
+            // })
             .style('fill', function(data) {
-              return data.race && data.race.candidates && d.name === b3.getWinner(data).party ? b3.partyScale(d.name) : 'white'
+              return b3.setPartyFill(data, party)
             })
-
-          tip.show(d);
+            .style('opacity', function(data) {
+              if(!data.race || !data.race.candidates) return 1;
+              var partyMatch = _.findWhere(data.race.candidates, {party: party})
+              return partyMatch ? b3.voteCountyHoverTotalScale(partyMatch.voteCount) : 'white'
+            })
         })
-        .on('mouseout', tip.hide);
-
+        // .on('mouseout', function(d) {
+        //   d3.selectAll('.county')
+        //     .style('fill', b3.setFill);
+        // })
 
     legend.append("rect")
         .attr("x", legendWidth - legendMarginRight)
         .attr("width", function(d) { return self.voteTotalScale(d.votes); })
         .attr("height", legendLineHeight - 2)
-        .style("fill", function(d) {
+        .style("fill", function(d) { 
           return b3.partyScale(d.name); });
 
 
@@ -182,3 +138,4 @@ var legend = {
 var self = legend
 
 module.exports = legend
+

@@ -23,6 +23,10 @@ var prefixes = [ "p", "n", "µ", "m", "", "k", "m", "b", "t" ].map(bbw_formatPre
 
 b3 = {
 
+  voteCountyHoverTotalScale: d3.scale.log().range([0, 1]),
+
+  voteCountyTotalScale: d3.scale.log().range([.35, 1]),
+
   partyScale: d3.scale.ordinal()
     .range(colors),
  
@@ -31,6 +35,10 @@ b3 = {
       return candidate.voteCount
     })
   },
+
+  // getParty: function(d, party) {
+  //   return _.findWhere(d.race.candidates, )
+  // }
 
   getParties: function(races) {
     return _.uniq(_.flatten(races.map(function(race) {
@@ -65,7 +73,15 @@ b3 = {
 
     races.forEach(function(race) {
       var key = race.fipsCode
+
+      if(self.raceMap.get(key)) {
+        
+      }
+
+
+
       self.raceMap.set(key, race)
+
     })
 
     var features = topojson.feature(us, us.objects.counties).features
@@ -104,6 +120,15 @@ b3 = {
     if(d.race && d.race.candidates) {
       var winner = b3.getWinner(d);
       return winner.party ? b3.partyScale(winner.party) : 'url(#crosshatch)';
+    } else {
+      return 'white'
+    }
+  },
+
+  setPartyFill: function(d, party) {
+    if(d.race && d.race.candidates) {
+      var containsParty = _.findWhere(d.race.candidates, {party: party})
+      return containsParty ? b3.partyScale(party) : 'white'
     } else {
       return 'white'
     }
