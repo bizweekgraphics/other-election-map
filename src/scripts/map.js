@@ -4,58 +4,14 @@ var queue = require('queue-async');
 var topojson = require('topojson');
 var _ = require('underscore');
 var b3 = require('./map-helpers.js');
-var legend = require('./legend.js');
+var legend = require('./legend.js')();
 
 
 module.exports = function() {
-
-  var resize = (function(){
-      console.log('TEST');
-      var windowId = '';
-      var resizeCount = 0;
-      var useString = false;
-
-      window.addEventListener(
-        "message",
-        function(event){
-          var data = event.data
-          if (data.substring){
-            useString = true;
-            data = JSON.parse(data)
-          }
-          if(data.method === "register"){
-            windowId = data.windowId;
-            resize();
-          }
-        },
-        false);
-
-      function resize(){
-        if (windowId === '') return
-        resizeCount++;
-
-        var message = {
-          method: "resize",
-          windowId: windowId,
-          height: document.documentElement.scrollHeight
-        } 
-
-        window.parent.postMessage(useString ? JSON.stringify(message) : message, '*')
-      }
-
-      resize.windowId = function(){
-        return windowId;
-      }
-
-      resize.resizeCount = function(){
-        return resizeCount;
-      }
-
-      return resize;
-    })();
+  'use strict';
 
   var width = parseInt(d3.select('#map-container').style('width'))
-  , mapRatio = .6
+  , mapRatio = 0.6
   , height = width * mapRatio
   , scaleWidth = width * 1.2
   , centered;
@@ -76,13 +32,13 @@ module.exports = function() {
   var svg = d3.select('#map-container').append('svg')
       .attr('width', width)
       .attr('height', height)
-      .call(tip)
+      .call(tip);
 
   svg.append("rect")
       .attr("class", "background")
       .attr("width", width)
       .attr("height", height)
-      .on("click", clicked)
+      .on("click", clicked);
 
   var g = svg.append("g");
 
@@ -92,22 +48,10 @@ module.exports = function() {
     .await(ready);
 
   function ready(error, us, racesArray) {
-    races = racesArray.races
+    var races = racesArray.races;
 
     b3.voteCountyTotalScale.domain([1,b3.getMaxVoteCount(races)]);
-    b3.voteCountyHoverTotalScale.domain(b3.voteCountyTotalScale.domain())
-
-    var zoomListener = d3.behavior.zoom()
-      .scaleExtent([0.1, 3])
-      .on("zoom", zoomHandler)
-
-    var dragListener = d3.behavior.drag()
-      .on('drag', function(d) {
-        console.log('drag');
-        // if(d.race) {
-        //   tip.show(d)
-        // }
-      })
+    b3.voteCountyHoverTotalScale.domain(b3.voteCountyTotalScale.domain());
 
     function zoomHandler() {
       g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -121,24 +65,13 @@ module.exports = function() {
         .attr('class', 'county')
         .attr('d', path)
         .style('fill', b3.setFill)
-        .style('opacity', function(d) {
-          if(!d.race || !d.race.candidates) return 1;
-          return b3.voteCountyTotalScale(_.max(d.race.candidates.map(function(e) {return e.voteCount;})));
-        })
+        .style('opacity', b3.setOpacity)
         .on('mouseover', function(d) {
           if(d.race) {
-            tip.show(d)
+            tip.show(d);
           }
         })
         .on('mouseout', tip.hide);
-
-        // .on('click', clicked)
-
-        // .on('click', clicked);
-
-    // zoomListener(g);
-
-    // dragListener(g)
 
     g.append('g')
       .attr('id', 'states')
@@ -147,7 +80,7 @@ module.exports = function() {
       .enter().append('path')
         .attr('d', path)
         .attr('class', function(d) {
-          return d.id === 2 ? "state alaska" : "state"
+          return d.id === 2 ? "state alaska" : "state";
         });
 
     //Deals with Alaska
@@ -159,29 +92,23 @@ module.exports = function() {
       .on('mouseout', tip.hide)
       .style('opacity', function(d) {
         return b3.voteCountyTotalScale(_.max(d.race.candidates.map(function(e) {return e.voteCount;})));
-      })
+      });
 
     if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       d3.selectAll('.county')
         .on('click', clicked);
 
       d3.select('.alaska')
-        .on('click', clicked)
+        .on('click', clicked);
     }
 
     g.append('path')
         .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
         .attr('class', 'state-borders')
-        .attr('d', path)
-    // svg.append('path')
-    //     .datum(topojson.mesh(states, states.objects.states, function(a, b) { return a !== b; }))
-    //     .attr('class', 'states')
-    //     .attr('d', path);
-
-    // LEGEND
+        .attr('d', path);
 
     legend.append(races);
-    resize();
+    b3.resize();
   }
 
   function clicked(d) {
@@ -213,15 +140,15 @@ module.exports = function() {
     var winner = b3.getWinner(d);
 
     if(winner.name === undefined) {
-      return '<span class="winner-name">Vacant Seat</span>'
+      return '<span class="winner-name">Vacant Seat</span>';
     }
 
-    return '<span class="winner-name">' + winner.name + '</span>'
-      + '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span> '
-      + '<span class="votes">' + d3.format(",")(winner.voteCount) + ' votes</span>';
+    return '<span class="winner-name">' + winner.name + '</span>' + 
+           '<span style="color:' + b3.partyScale(winner.party) + '">' + winner.party + '</span> ' +
+           '<span class="votes">' + d3.format(",")(winner.voteCount) + ' votes</span>';
   }
 
 
 
   d3.select(self.frameElement).style('height', height + 'px');
-}
+};

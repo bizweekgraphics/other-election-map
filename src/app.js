@@ -1,5 +1,1 @@
-
-
-
-
-require('./scripts/map.js')()
+require('./scripts/map.js')();

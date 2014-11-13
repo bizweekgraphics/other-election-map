@@ -3,7 +3,7 @@ var connect = require('gulp-connect');
 
 module.exports = function() {
   
-  gulp.watch(['./src/**/*.js'], ['browserify'])
+  gulp.watch(['./src/**/*.js'], ['browserify', 'jshint'])
 
   gulp.watch('src/**/*.scss', ['sass']);
 
