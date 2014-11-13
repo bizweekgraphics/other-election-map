@@ -8,4 +8,4 @@ var gulp = require('./gulp')([
   'jshint'
 ])
 
-gulp.task('default', ['sass', 'vendor', 'browserify', 'webserver', 'watch']);
+gulp.task('default', ['sass', 'jshint', 'vendor', 'browserify', 'webserver', 'watch']);
