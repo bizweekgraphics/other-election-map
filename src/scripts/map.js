@@ -44,7 +44,7 @@ module.exports = function() {
 
   queue()
     .defer(d3.json, 'data/us.json')
-    .defer(d3.json, 'data/updated_senate_by_county.json')
+    .defer(d3.json, 'data/updated_senate_by_county_sc_fix.json')
     .await(ready);
 
   function ready(error, us, racesArray) {
