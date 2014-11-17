@@ -1,0 +1,232 @@
+[
+  {
+    "countyName": "Abbeville",
+    "Brad Hutto": 159,
+    "fipsCode": 45001
+  },
+  {
+    "countyName": "Aiken",
+    "Brad Hutto": 933,
+    "fipsCode": 45003
+  },
+  {
+    "countyName": "Allendale",
+    "Brad Hutto": 63,
+    "fipsCode": 45005
+  },
+  {
+    "countyName": "Anderson",
+    "Brad Hutto": 988,
+    "fipsCode": 45007
+  },
+  {
+    "countyName": "Bamberg",
+    "Brad Hutto": 102,
+    "fipsCode": 45009
+  },
+  {
+    "countyName": "Barnwell",
+    "Brad Hutto": 165,
+    "fipsCode": 45011
+  },
+  {
+    "countyName": "Beaufort",
+    "Brad Hutto": 571,
+    "fipsCode": 45013
+  },
+  {
+    "countyName": "Berkeley",
+    "Brad Hutto": 975,
+    "fipsCode": 45015
+  },
+  {
+    "countyName": "Calhoun",
+    "Brad Hutto": 107,
+    "fipsCode": 45017
+  },
+  {
+    "countyName": "Charleston",
+    "Brad Hutto": 1715,
+    "fipsCode": 45019
+  },
+  {
+    "countyName": "Cherokee",
+    "Brad Hutto": 280,
+    "fipsCode": 45021
+  },
+  {
+    "countyName": "Chester",
+    "Brad Hutto": 286,
+    "fipsCode": 45023
+  },
+  {
+    "countyName": "Chesterfield",
+    "Brad Hutto": 270,
+    "fipsCode": 45025
+  },
+  {
+    "countyName": "Clarendon",
+    "Brad Hutto": 160,
+    "fipsCode": 45027
+  },
+  {
+    "countyName": "Colleton",
+    "Brad Hutto": 214,
+    "fipsCode": 45029
+  },
+  {
+    "countyName": "Darlington",
+    "Brad Hutto": 247,
+    "fipsCode": 45031
+  },
+  {
+    "countyName": "Dillon",
+    "Brad Hutto": 130,
+    "fipsCode": 45033
+  },
+  {
+    "countyName": "Dorchester",
+    "Brad Hutto": 793,
+    "fipsCode": 45035
+  },
+  {
+    "countyName": "Edgefield",
+    "Brad Hutto": 155,
+    "fipsCode": 45037
+  },
+  {
+    "countyName": "Fairfield",
+    "Brad Hutto": 156,
+    "fipsCode": 45039
+  },
+  {
+    "countyName": "Florence",
+    "Brad Hutto": 561,
+    "fipsCode": 45041
+  },
+  {
+    "countyName": "Georgetown",
+    "Brad Hutto": 270,
+    "fipsCode": 45043
+  },
+  {
+    "countyName": "Greenville",
+    "Brad Hutto": 2602,
+    "fipsCode": 45045
+  },
+  {
+    "countyName": "Greenwood",
+    "Brad Hutto": 317,
+    "fipsCode": 45047
+  },
+  {
+    "countyName": "Hampton",
+    "Brad Hutto": 172,
+    "fipsCode": 45049
+  },
+  {
+    "countyName": "Horry",
+    "Brad Hutto": 1206,
+    "fipsCode": 45051
+  },
+  {
+    "countyName": "Jasper",
+    "Brad Hutto": 128,
+    "fipsCode": 45053
+  },
+  {
+    "countyName": "Kershaw",
+    "Brad Hutto": 475,
+    "fipsCode": 45055
+  },
+  {
+    "countyName": "Lancaster",
+    "Brad Hutto": 445,
+    "fipsCode": 45057
+  },
+  {
+    "countyName": "Laurens",
+    "Brad Hutto": 368,
+    "fipsCode": 45059
+  },
+  {
+    "countyName": "Lee",
+    "Brad Hutto": 75,
+    "fipsCode": 45061
+  },
+  {
+    "countyName": "Lexington",
+    "Brad Hutto": 1790,
+    "fipsCode": 45063
+  },
+  {
+    "countyName": "Marion",
+    "Brad Hutto": 140,
+    "fipsCode": 45067
+  },
+  {
+    "countyName": "Marlboro",
+    "Brad Hutto": 135,
+    "fipsCode": 45069
+  },
+  {
+    "countyName": "McCormick",
+    "Brad Hutto": 35,
+    "fipsCode": 45065
+  },
+  {
+    "countyName": "Newberry",
+    "Brad Hutto": 213,
+    "fipsCode": 45071
+  },
+  {
+    "countyName": "Oconee",
+    "Brad Hutto": 351,
+    "fipsCode": 45073
+  },
+  {
+    "countyName": "Orangeburg",
+    "Brad Hutto": 381,
+    "fipsCode": 45075
+  },
+  {
+    "countyName": "Pickens",
+    "Brad Hutto": 657,
+    "fipsCode": 45077
+  },
+  {
+    "countyName": "Richland",
+    "Brad Hutto": 1862,
+    "fipsCode": 45079
+  },
+  {
+    "countyName": "Saluda",
+    "Brad Hutto": 134,
+    "fipsCode": 45081
+  },
+  {
+    "countyName": "Spartanburg",
+    "Brad Hutto": 1402,
+    "fipsCode": 45083
+  },
+  {
+    "countyName": "Sumter",
+    "Brad Hutto": 466,
+    "fipsCode": 45085
+  },
+  {
+    "countyName": "Union",
+    "Brad Hutto": 210,
+    "fipsCode": 45087
+  },
+  {
+    "countyName": "Williamsburg",
+    "Brad Hutto": 128,
+    "fipsCode": 45089
+  },
+  {
+    "countyName": "York",
+    "Brad Hutto": 1215,
+    "fipsCode": 45091
+  }
+]
